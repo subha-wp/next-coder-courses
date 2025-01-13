@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import CourseCard from "@/components/CourseCard";
+import CourseCard from "@/components/course/CourseCard";
 
 export default async function CoursesPage() {
   const courses: any[] = [];
