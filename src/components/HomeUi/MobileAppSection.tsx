@@ -87,7 +87,7 @@ export function MobileAppSection() {
               <div className="absolute top-1/2 left-1/2 -translate-x-[60%] -translate-y-1/2 w-48 md:w-72 h-[400px] md:h-[600px] transform rotate-[-12deg] transition-all duration-700 ">
                 <div className="relative w-full h-full bg-black rounded-[3rem] border border-white/20 shadow-[0_0_30px_rgba(255,255,255,0.2)] overflow-hidden">
                   <Image
-                    src="/login screen.png"
+                    src="/login-ui.png"
                     alt="LearnHub mobile app course screen"
                     fill
                     className="object-cover"
@@ -99,7 +99,7 @@ export function MobileAppSection() {
               <div className="absolute top-1/2 left-1/2 -translate-x-[40%] -translate-y-1/2 w-48 md:w-72 h-[400px] md:h-[600px] transform rotate-[12deg] transition-all duration-700 delay-200 ">
                 <div className="relative w-full h-full bg-black rounded-[3rem] border border-white/20 shadow-[0_0_30px_rgba(255,255,255,0.2)] overflow-hidden">
                   <Image
-                    src="/login screen.png"
+                    src="/login-ui.png"
                     alt="LearnHub mobile app progress screen"
                     fill
                     className="object-cover"
