@@ -48,7 +48,7 @@ export function MobileAppSection() {
                 size="lg"
                 className="relative overflow-hidden group w-full sm:w-auto"
               >
-                <PlayIcon className="w-6 h-6 mr-2" />
+                <PlayIcon className="w-6 h-6" />
                 <div>
                   <span className="block text-xs">Get it on</span>
                   <span className="block text-base font-semibold">
@@ -58,36 +58,16 @@ export function MobileAppSection() {
                 <div className="absolute inset-0 bg-primary/10 translate-y-full transition-transform group-hover:translate-y-0" />
               </Button>
             </div>
-            <div className="flex items-center justify-between pt-8">
-              <div className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-violet-400 text-glow">
-                  4.9
-                </div>
-                <div className="text-sm text-white/80">App Store Rating</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-violet-400 text-glow">
-                  1M+
-                </div>
-                <div className="text-sm text-white/80">Active Users</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-violet-400 text-glow">
-                  50+
-                </div>
-                <div className="text-sm text-white/80">Countries</div>
-              </div>
-            </div>
           </div>
 
           {/* Phone Mockups */}
           <div className="lg:w-1/2 relative mt-[250px] md:mt-1">
             <div className="relative w-full aspect-square max-w-[400px] lg:max-w-[600px] mx-auto">
               {/* First Phone */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-[60%] -translate-y-1/2 w-48 md:w-72 h-[400px] md:h-[600px] transform rotate-[-12deg] transition-all duration-700 ">
+              <div className="absolute top-1/2 left-1/2 -translate-x-[60%] -translate-y-1/2 w-48 md:w-72 h-[350px] md:h-[600px] transform rotate-[-12deg] transition-all duration-700 ">
                 <div className="relative w-full h-full bg-black rounded-[3rem] border border-white/20 shadow-[0_0_30px_rgba(255,255,255,0.2)] overflow-hidden">
                   <Image
-                    src="/login-ui.png"
+                    src="/nextcoder-login-ui.png"
                     alt="LearnHub mobile app course screen"
                     fill
                     className="object-cover"
@@ -96,10 +76,10 @@ export function MobileAppSection() {
               </div>
 
               {/* Second Phone */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-[40%] -translate-y-1/2 w-48 md:w-72 h-[400px] md:h-[600px] transform rotate-[12deg] transition-all duration-700 delay-200 ">
+              <div className="absolute top-1/2 left-1/2 -translate-x-[40%] -translate-y-1/2 w-48 md:w-72 h-[350px] md:h-[600px] transform rotate-[12deg] transition-all duration-700 delay-200 ">
                 <div className="relative w-full h-full bg-black rounded-[3rem] border border-white/20 shadow-[0_0_30px_rgba(255,255,255,0.2)] overflow-hidden">
                   <Image
-                    src="/login-ui.png"
+                    src="/nextcoder-login-ui.png"
                     alt="LearnHub mobile app progress screen"
                     fill
                     className="object-cover"
