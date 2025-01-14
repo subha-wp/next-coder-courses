@@ -1,7 +1,6 @@
-//src/app/admin-dashboard/courses/[id]/lessons/new/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, use } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,9 +8,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 
-export default function NewLessonPage({ params }: { params: { id: string } }) {
+export default function NewLessonPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const { id } = use(params);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,7 +25,7 @@ export default function NewLessonPage({ params }: { params: { id: string } }) {
     const data = {
       title: formData.get("title"),
       content: formData.get("content"),
-      courseId: params.id,
+      courseId: id,
     };
 
     try {
@@ -36,7 +40,7 @@ export default function NewLessonPage({ params }: { params: { id: string } }) {
       if (!res.ok) throw new Error("Failed to create lesson");
 
       toast.success("Lesson created successfully");
-      router.push(`/admin-dashboard/courses/${params.id}/lessons`);
+      router.push(`/admin-dashboard/courses/${id}/lessons`);
     } catch (error) {
       toast.error("Failed to create lesson");
       console.error("Create lesson error:", error);
@@ -86,7 +90,7 @@ export default function NewLessonPage({ params }: { params: { id: string } }) {
               type="button"
               variant="outline"
               onClick={() =>
-                router.push(`/admin-dashboard/courses/${params.id}/lessons`)
+                router.push(`/admin-dashboard/courses/${id}/lessons`)
               }
             >
               Cancel
