@@ -7,10 +7,11 @@ import { notFound } from "next/navigation";
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
+  const { slug } = await params;
   const course = await prisma.course.findUnique({
-    where: { slug: params.slug },
+    where: { slug: slug },
     include: {
       instructor: {
         select: {
@@ -42,11 +43,12 @@ export async function generateMetadata({
 export default async function CoursePage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
+  const { slug } = await params;
   const { user } = await validateRequest();
   const course = await prisma.course.findUnique({
-    where: { slug: params.slug },
+    where: { slug: slug },
     include: {
       instructor: {
         select: {

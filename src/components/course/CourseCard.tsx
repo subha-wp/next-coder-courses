@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-interface CourseCardProps {
+type CourseCardProps = {
   course: {
     id: string;
     title: string;
@@ -17,8 +17,9 @@ interface CourseCardProps {
     instructor: {
       name: string;
     };
+    slug: string;
   };
-}
+};
 
 export default function CourseCard({ course }: CourseCardProps) {
   return (
@@ -30,13 +31,13 @@ export default function CourseCard({ course }: CourseCardProps) {
         <p className="text-sm text-gray-600 mb-2">
           Instructor: {course.instructor.name}
         </p>
-        <p className="mb-4">{course.description}</p>
+        <p className="text-sm mb-4">{course.description}</p>
         <p className="font-bold">Price: ${course.price.toFixed(2)}</p>
       </CardContent>
       <CardFooter>
-        <Link href={`/courses/${course.id}`}>
-          <Button>View Course</Button>
-        </Link>
+        <Button asChild>
+          <Link href={`/courses/${course.slug}`}>View Course</Link>
+        </Button>
       </CardFooter>
     </Card>
   );
