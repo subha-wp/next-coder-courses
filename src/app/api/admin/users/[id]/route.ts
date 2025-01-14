@@ -4,16 +4,17 @@ import { validateRequest } from "@/lib/auth";
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { user } = await validateRequest();
+    const { id } = await params;
 
     if (!user || user.role !== "ADMIN") {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const userId = params.id;
+    const userId = id;
 
     // Delete user's sessions first
     await prisma.session.deleteMany({

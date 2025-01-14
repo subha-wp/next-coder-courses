@@ -39,6 +39,7 @@ model Session {
 model Course {
   id          String       @id @default(cuid())
   title       String
+  slug        String       @unique
   description String
   price       Float
   instructorId String
@@ -48,6 +49,8 @@ model Course {
   enrollments Enrollment[]
   lessons     Lesson[]
   streamSessions StreamSession[]
+
+  @@index([slug])
 }
 
 model Lesson {

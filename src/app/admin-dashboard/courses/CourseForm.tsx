@@ -26,8 +26,8 @@ export default function CourseForm({ course }: { course?: any }) {
 
     try {
       const url = course
-        ? `/api/admin/courses/${course.id}`
-        : "/api/admin/courses";
+        ? `/api/admin-dashboard/courses/${course.id}`
+        : "/api/admin-dashboard/courses";
       const method = course ? "PUT" : "POST";
 
       const res = await fetch(url, {
