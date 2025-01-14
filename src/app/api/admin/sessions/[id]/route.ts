@@ -29,9 +29,10 @@ export async function DELETE(
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const { user } = await validateRequest();
 
     if (!user || user.role !== "ADMIN") {
@@ -39,7 +40,7 @@ export async function PUT(
     }
 
     const data = await request.json();
-    const sessionId = params.id;
+    const sessionId = id;
 
     const session = await prisma.streamSession.update({
       where: { id: sessionId },

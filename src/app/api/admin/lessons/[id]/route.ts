@@ -4,9 +4,10 @@ import { validateRequest } from "@/lib/auth";
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const { user } = await validateRequest();
 
     if (!user || user.role !== "ADMIN") {
@@ -14,7 +15,7 @@ export async function PUT(
     }
 
     const data = await request.json();
-    const lessonId = params.id;
+    const lessonId = id;
 
     const lesson = await prisma.lesson.update({
       where: { id: lessonId },
@@ -33,16 +34,17 @@ export async function PUT(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const { user } = await validateRequest();
 
     if (!user || user.role !== "ADMIN") {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const lessonId = params.id;
+    const lessonId = id;
 
     await prisma.lesson.delete({
       where: { id: lessonId },

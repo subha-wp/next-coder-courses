@@ -4,9 +4,10 @@ import { validateRequest } from "@/lib/auth";
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const { user } = await validateRequest();
 
     if (!user || user.role !== "ADMIN") {
@@ -14,7 +15,7 @@ export async function PUT(
     }
 
     const data = await request.json();
-    const courseId = params.id;
+    const courseId = id;
 
     const course = await prisma.course.update({
       where: { id: courseId },
