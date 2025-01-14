@@ -7,7 +7,7 @@ import DeleteLessonButton from "./DeleteLessonButton";
 export default async function CourseLessonsPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   // Destructure and await the id from params
   const { id } = await params;
