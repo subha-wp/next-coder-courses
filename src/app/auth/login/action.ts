@@ -27,6 +27,7 @@ export async function login(formData: FormData) {
   try {
     const existingUser = await prisma.user.findUnique({
       where: { email },
+      select: { id: true, hashedPassword: true, role: true },
     });
 
     if (!existingUser) {
@@ -53,7 +54,9 @@ export async function login(formData: FormData) {
       sessionCookie.attributes
     );
 
-    return { success: true };
+    const route =
+      existingUser.role === "ADMIN" ? "/admin-dashboard" : "/courses";
+    return { success: true, route };
   } catch (error) {
     console.error("Login error:", error);
     return { error: "An error occurred during login. Please try again." };
