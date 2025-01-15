@@ -21,13 +21,14 @@ export default function CourseForm({ course }: { course?: any }) {
     const data = {
       title: formData.get("title"),
       description: formData.get("description"),
+      thumbnailUrl: formData.get("thumbnailUrl"),
       price: parseFloat(formData.get("price") as string),
     };
 
     try {
       const url = course
-        ? `/api/admin-dashboard/courses/${course.id}`
-        : "/api/admin-dashboard/courses";
+        ? `/api/admin/courses/${course.id}`
+        : "/api/admin/courses";
       const method = course ? "PUT" : "POST";
 
       const res = await fetch(url, {
@@ -41,7 +42,7 @@ export default function CourseForm({ course }: { course?: any }) {
       if (!res.ok) throw new Error("Failed to save course");
 
       toast.success(course ? "Course updated" : "Course created");
-      router.push("/admin/courses");
+      router.push("/admin-dashboard/courses");
     } catch (error) {
       toast.error("Failed to save course");
       console.error("Save course error:", error);
@@ -85,6 +86,22 @@ export default function CourseForm({ course }: { course?: any }) {
 
         <div>
           <label
+            htmlFor="thumbnailUrl"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Thumbnail URL
+          </label>
+          <Input
+            id="thumbnailUrl"
+            name="thumbnailUrl"
+            type="url"
+            defaultValue={course?.thumbnailUrl}
+            placeholder="https://example.com/image.jpg"
+          />
+        </div>
+
+        <div>
+          <label
             htmlFor="price"
             className="block text-sm font-medium text-gray-700"
           >
@@ -104,7 +121,7 @@ export default function CourseForm({ course }: { course?: any }) {
           <Button
             type="button"
             variant="outline"
-            onClick={() => router.push("/admin/courses")}
+            onClick={() => router.push("/admin-dashboard/courses")}
           >
             Cancel
           </Button>

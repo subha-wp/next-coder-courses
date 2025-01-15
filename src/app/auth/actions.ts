@@ -1,3 +1,4 @@
+// src/app/auth/actions.ts
 "use server";
 
 import { lucia } from "@/lib/auth";

@@ -1,3 +1,4 @@
+// src/lib/auth.ts
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
 import { Google } from "arctic";
 import { Lucia, Session, User } from "lucia";

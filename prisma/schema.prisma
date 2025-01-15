@@ -41,6 +41,7 @@ model Course {
   title       String
   slug        String       @unique
   description String
+  thumbnailUrl String?
   price       Float
   instructorId String
   instructor  User         @relation("InstructorCourses", fields: [instructorId], references: [id])
@@ -59,8 +60,41 @@ model Lesson {
   content     String
   courseId    String
   course      Course   @relation(fields: [courseId], references: [id])
+  order       Int      @default(1)
+  duration    Int?     // Duration in minutes
+  videos      LessonVideo[]
+  materials   LessonMaterial[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@index([courseId, order])
+}
+
+model LessonVideo {
+  id          String   @id @default(cuid())
+  title       String
+  url         String
+  duration    Int?     // Duration in minutes
+  order       Int      @default(1)
+  lessonId    String
+  lesson      Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([lessonId, order])
+}
+
+model LessonMaterial {
+  id          String   @id @default(cuid())
+  title       String
+  type        MaterialType
+  url         String
+  lessonId    String
+  lesson      Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([lessonId])
 }
 
 model Enrollment {
@@ -101,3 +135,10 @@ enum Role {
   STUDENT
 }
 
+enum MaterialType {
+  PDF
+  DOCUMENT
+  SPREADSHEET
+  PRESENTATION
+  OTHER
+}

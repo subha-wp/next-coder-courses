@@ -84,7 +84,7 @@ export default async function CoursePage({
           <p className="text-lg mb-2">Instructor: {course.instructor.name}</p>
           <p className="text-gray-600">{course.description}</p>
           <p className="text-xl font-bold mt-4">
-            Price: ${course.price.toFixed(2)}
+            Price: ₹{course.price.toFixed(2)}
           </p>
         </div>
 

@@ -1,3 +1,4 @@
+// src/app/auth/layout.tsx
 import { validateRequest } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
