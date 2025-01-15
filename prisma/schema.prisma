@@ -43,6 +43,7 @@ model Course {
   description String
   thumbnailUrl String?
   price       Float
+  hasFreeTrial Boolean     @default(false)
   instructorId String
   instructor  User         @relation("InstructorCourses", fields: [instructorId], references: [id])
   createdAt   DateTime     @default(now())
@@ -62,6 +63,7 @@ model Lesson {
   course      Course   @relation(fields: [courseId], references: [id])
   order       Int      @default(1)
   duration    Int?     // Duration in minutes
+  isFree      Boolean  @default(false)
   videos      LessonVideo[]
   materials   LessonMaterial[]
   createdAt   DateTime @default(now())

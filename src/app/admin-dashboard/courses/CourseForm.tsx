@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 
@@ -23,6 +25,7 @@ export default function CourseForm({ course }: { course?: any }) {
       description: formData.get("description"),
       thumbnailUrl: formData.get("thumbnailUrl"),
       price: parseFloat(formData.get("price") as string),
+      hasFreeTrial: formData.get("hasFreeTrial") === "on",
     };
 
     try {
@@ -55,12 +58,7 @@ export default function CourseForm({ course }: { course?: any }) {
     <Card className="p-6">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label
-            htmlFor="title"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Title
-          </label>
+          <Label htmlFor="title">Title</Label>
           <Input
             id="title"
             name="title"
@@ -70,12 +68,7 @@ export default function CourseForm({ course }: { course?: any }) {
         </div>
 
         <div>
-          <label
-            htmlFor="description"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Description
-          </label>
+          <Label htmlFor="description">Description</Label>
           <Textarea
             id="description"
             name="description"
@@ -85,12 +78,7 @@ export default function CourseForm({ course }: { course?: any }) {
         </div>
 
         <div>
-          <label
-            htmlFor="thumbnailUrl"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Thumbnail URL
-          </label>
+          <Label htmlFor="thumbnailUrl">Thumbnail URL</Label>
           <Input
             id="thumbnailUrl"
             name="thumbnailUrl"
@@ -101,12 +89,7 @@ export default function CourseForm({ course }: { course?: any }) {
         </div>
 
         <div>
-          <label
-            htmlFor="price"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Price
-          </label>
+          <Label htmlFor="price">Price</Label>
           <Input
             id="price"
             name="price"
@@ -115,6 +98,15 @@ export default function CourseForm({ course }: { course?: any }) {
             defaultValue={course?.price}
             required
           />
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <Switch
+            id="hasFreeTrial"
+            name="hasFreeTrial"
+            defaultChecked={course?.hasFreeTrial}
+          />
+          <Label htmlFor="hasFreeTrial">Enable free trial (first lesson)</Label>
         </div>
 
         <div className="flex justify-end space-x-4">

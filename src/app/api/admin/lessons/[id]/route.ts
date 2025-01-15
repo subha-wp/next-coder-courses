@@ -22,6 +22,7 @@ export async function PUT(
       data: {
         title: data.title,
         content: data.content,
+        duration: data.duration,
       },
     });
 

@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 import {
@@ -35,9 +37,14 @@ interface Material {
 interface LessonFormProps {
   courseId: string;
   lesson?: any;
+  isFirstLesson?: boolean;
 }
 
-export default function LessonForm({ courseId, lesson }: LessonFormProps) {
+export default function LessonForm({
+  courseId,
+  lesson,
+  isFirstLesson,
+}: LessonFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [videos, setVideos] = useState<Video[]>(
@@ -56,6 +63,7 @@ export default function LessonForm({ courseId, lesson }: LessonFormProps) {
       title: formData.get("title"),
       content: formData.get("content"),
       duration: parseInt(formData.get("duration") as string) || null,
+      isFree: formData.get("isFree") === "on",
       courseId,
       videos: videos.filter((v) => v.title && v.url),
       materials: materials.filter((m) => m.title && m.url),
@@ -151,6 +159,12 @@ export default function LessonForm({ courseId, lesson }: LessonFormProps) {
             defaultValue={lesson?.duration}
           />
         </div>
+        {isFirstLesson && (
+          <div className="flex items-center space-x-2">
+            <Switch id="isFree" name="isFree" defaultChecked={lesson?.isFree} />
+            <Label htmlFor="isFree">Make this lesson free (preview)</Label>
+          </div>
+        )}
 
         <div className="space-y-4">
           <div className="flex justify-between items-center">
