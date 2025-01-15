@@ -47,6 +47,7 @@ export default function LessonForm({
 }: LessonFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [isFree, setIsFree] = useState(lesson?.isFree || false);
   const [videos, setVideos] = useState<Video[]>(
     lesson?.videos || [{ title: "", url: "", order: 1 }]
   );
@@ -63,7 +64,7 @@ export default function LessonForm({
       title: formData.get("title"),
       content: formData.get("content"),
       duration: parseInt(formData.get("duration") as string) || null,
-      isFree: formData.get("isFree") === "on",
+      isFree,
       courseId,
       videos: videos.filter((v) => v.title && v.url),
       materials: materials.filter((m) => m.title && m.url),
@@ -83,10 +84,14 @@ export default function LessonForm({
         body: JSON.stringify(data),
       });
 
-      if (!res.ok) throw new Error("Failed to save lesson");
+      if (!res.ok) {
+        const error = await res.text();
+        throw new Error(error);
+      }
 
       toast.success(lesson ? "Lesson updated" : "Lesson created");
       router.push(`/admin-dashboard/courses/${courseId}/lessons`);
+      router.refresh();
     } catch (error) {
       toast.error("Failed to save lesson");
       console.error("Save lesson error:", error);
@@ -103,6 +108,16 @@ export default function LessonForm({
     setVideos(videos.filter((_, i) => i !== index));
   };
 
+  const updateVideo = (
+    index: number,
+    field: keyof Video,
+    value: string | number
+  ) => {
+    const newVideos = [...videos];
+    newVideos[index] = { ...newVideos[index], [field]: value };
+    setVideos(newVideos);
+  };
+
   const addMaterial = () => {
     setMaterials([...materials, { title: "", type: "PDF", url: "" }]);
   };
@@ -111,16 +126,21 @@ export default function LessonForm({
     setMaterials(materials.filter((_, i) => i !== index));
   };
 
+  const updateMaterial = (
+    index: number,
+    field: keyof Material,
+    value: string
+  ) => {
+    const newMaterials = [...materials];
+    newMaterials[index] = { ...newMaterials[index], [field]: value };
+    setMaterials(newMaterials);
+  };
+
   return (
     <Card className="p-6">
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label
-            htmlFor="title"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Title
-          </label>
+          <Label htmlFor="title">Title</Label>
           <Input
             id="title"
             name="title"
@@ -130,12 +150,7 @@ export default function LessonForm({
         </div>
 
         <div>
-          <label
-            htmlFor="content"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Content
-          </label>
+          <Label htmlFor="content">Content</Label>
           <Textarea
             id="content"
             name="content"
@@ -146,12 +161,7 @@ export default function LessonForm({
         </div>
 
         <div>
-          <label
-            htmlFor="duration"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Duration (minutes)
-          </label>
+          <Label htmlFor="duration">Duration (minutes)</Label>
           <Input
             id="duration"
             name="duration"
@@ -159,9 +169,10 @@ export default function LessonForm({
             defaultValue={lesson?.duration}
           />
         </div>
+
         {isFirstLesson && (
           <div className="flex items-center space-x-2">
-            <Switch id="isFree" name="isFree" defaultChecked={lesson?.isFree} />
+            <Switch id="isFree" checked={isFree} onCheckedChange={setIsFree} />
             <Label htmlFor="isFree">Make this lesson free (preview)</Label>
           </div>
         )}
@@ -188,46 +199,30 @@ export default function LessonForm({
                 <X className="h-4 w-4" />
               </Button>
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Video Title
-                </label>
+                <Label>Video Title</Label>
                 <Input
                   value={video.title}
-                  onChange={(e) => {
-                    const newVideos = [...videos];
-                    newVideos[index].title = e.target.value;
-                    setVideos(newVideos);
-                  }}
+                  onChange={(e) => updateVideo(index, "title", e.target.value)}
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Video URL
-                </label>
+                <Label>Video URL</Label>
                 <Input
                   type="url"
                   value={video.url}
-                  onChange={(e) => {
-                    const newVideos = [...videos];
-                    newVideos[index].url = e.target.value;
-                    setVideos(newVideos);
-                  }}
+                  onChange={(e) => updateVideo(index, "url", e.target.value)}
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Duration (minutes)
-                </label>
+                <Label>Duration (minutes)</Label>
                 <Input
                   type="number"
                   value={video.duration || ""}
-                  onChange={(e) => {
-                    const newVideos = [...videos];
-                    newVideos[index].duration = parseInt(e.target.value);
-                    setVideos(newVideos);
-                  }}
+                  onChange={(e) =>
+                    updateVideo(index, "duration", parseInt(e.target.value))
+                  }
                 />
               </div>
             </div>
@@ -256,30 +251,22 @@ export default function LessonForm({
                 <X className="h-4 w-4" />
               </Button>
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Material Title
-                </label>
+                <Label>Material Title</Label>
                 <Input
                   value={material.title}
-                  onChange={(e) => {
-                    const newMaterials = [...materials];
-                    newMaterials[index].title = e.target.value;
-                    setMaterials(newMaterials);
-                  }}
+                  onChange={(e) =>
+                    updateMaterial(index, "title", e.target.value)
+                  }
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Material Type
-                </label>
+                <Label>Material Type</Label>
                 <Select
                   value={material.type}
-                  onValueChange={(value) => {
-                    const newMaterials = [...materials];
-                    newMaterials[index].type = value;
-                    setMaterials(newMaterials);
-                  }}
+                  onValueChange={(value) =>
+                    updateMaterial(index, "type", value)
+                  }
                 >
                   <SelectTrigger>
                     <SelectValue />
@@ -294,17 +281,11 @@ export default function LessonForm({
                 </Select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Material URL
-                </label>
+                <Label>Material URL</Label>
                 <Input
                   type="url"
                   value={material.url}
-                  onChange={(e) => {
-                    const newMaterials = [...materials];
-                    newMaterials[index].url = e.target.value;
-                    setMaterials(newMaterials);
-                  }}
+                  onChange={(e) => updateMaterial(index, "url", e.target.value)}
                   required
                 />
               </div>

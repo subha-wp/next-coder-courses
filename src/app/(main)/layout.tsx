@@ -40,21 +40,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${inter.className} min-h-screen bg-background text-foreground`}
+    <div
+      className={`${inter.className} min-h-screen bg-background text-foreground`}
+    >
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="dark"
+        enableSystem
+        disableTransitionOnChange
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </ThemeProvider>
-      </body>
-    </html>
+        <Header />
+        <main>{children}</main>
+        <Footer />
+      </ThemeProvider>
+    </div>
   );
 }

@@ -1,3 +1,4 @@
+// src/app/courses/page.tsx
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 //@ts-nocheck
 import { Suspense, use } from "react";
