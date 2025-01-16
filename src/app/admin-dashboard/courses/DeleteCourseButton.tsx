@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { Trash2 } from "lucide-react";
 
 export default function DeleteCourseButton({ courseId }: { courseId: string }) {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -35,7 +36,7 @@ export default function DeleteCourseButton({ courseId }: { courseId: string }) {
       onClick={handleDelete}
       disabled={isDeleting}
     >
-      {isDeleting ? "Deleting..." : "Delete"}
+      {isDeleting ? "Deleting..." : <Trash2 />}
     </Button>
   );
 }

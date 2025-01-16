@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 import DeleteCourseButton from "./DeleteCourseButton";
+import { CopyPlus, FilePenLine, UserPlus } from "lucide-react";
 
 export default async function CoursesPage() {
   const courses = await prisma.course.findMany({
@@ -70,6 +71,18 @@ export default async function CoursesPage() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right">
                     <Button
+                      variant="outline"
+                      size="sm"
+                      className="mr-2"
+                      asChild
+                    >
+                      <Link
+                        href={`/admin-dashboard/courses/${course.id}/enrollments`}
+                      >
+                        <UserPlus />
+                      </Link>
+                    </Button>
+                    <Button
                       variant="default"
                       size="sm"
                       className="mr-2"
@@ -78,7 +91,7 @@ export default async function CoursesPage() {
                       <Link
                         href={`/admin-dashboard/courses/${course.id}/lessons`}
                       >
-                        Add Lessons
+                        <CopyPlus />
                       </Link>
                     </Button>
                     <Button
@@ -88,7 +101,7 @@ export default async function CoursesPage() {
                       asChild
                     >
                       <Link href={`/admin-dashboard/courses/${course.id}/edit`}>
-                        Edit
+                        <FilePenLine />
                       </Link>
                     </Button>
                     <DeleteCourseButton courseId={course.id} />

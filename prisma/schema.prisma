@@ -44,6 +44,7 @@ model Course {
   thumbnailUrl String?
   price       Float
   hasFreeTrial Boolean     @default(false)
+  isFree      Boolean      @default(false)
   instructorId String
   instructor  User         @relation("InstructorCourses", fields: [instructorId], references: [id])
   createdAt   DateTime     @default(now())
@@ -100,13 +101,16 @@ model LessonMaterial {
 }
 
 model Enrollment {
-  id        String   @id @default(cuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  courseId  String
-  course    Course   @relation(fields: [courseId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  courseId    String
+  course      Course   @relation(fields: [courseId], references: [id])
+  enrollmentType EnrollmentType @default(PAID)
+  status      EnrollmentStatus @default(ACTIVE)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  enrolledBy  String?  // ID of admin who manually enrolled the user
 }
 
 model Payment {
@@ -115,6 +119,7 @@ model Payment {
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   courseId  String
+  status    PaymentStatus @default(PENDING)
   createdAt DateTime @default(now())
 }
 
@@ -143,4 +148,22 @@ enum MaterialType {
   SPREADSHEET
   PRESENTATION
   OTHER
+}
+
+enum EnrollmentType {
+  FREE
+  PAID
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  SUSPENDED
+  COMPLETED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
 }

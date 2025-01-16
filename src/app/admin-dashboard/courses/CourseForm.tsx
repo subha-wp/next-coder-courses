@@ -26,6 +26,7 @@ export default function CourseForm({ course }: { course?: any }) {
       thumbnailUrl: formData.get("thumbnailUrl"),
       price: parseFloat(formData.get("price") as string),
       hasFreeTrial: formData.get("hasFreeTrial") === "on",
+      isFree: formData.get("isFree") === "on",
     };
 
     try {
@@ -98,6 +99,11 @@ export default function CourseForm({ course }: { course?: any }) {
             defaultValue={course?.price}
             required
           />
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <Switch id="isFree" name="isFree" defaultChecked={course?.isFree} />
+          <Label htmlFor="isFree">Make this course free</Label>
         </div>
 
         <div className="flex items-center space-x-2">

@@ -23,6 +23,7 @@ interface Course {
   instructor: Instructor;
   lessons: Lesson[];
   price: number;
+  isFree: boolean;
 }
 
 interface CourseHeroProps {
@@ -31,6 +32,7 @@ interface CourseHeroProps {
   isEnrolled: boolean;
   user: any; // Replace with proper user type if available
   selectedVideo: any; // Replace with proper video type if available
+  onEnroll: () => void;
 }
 
 export function CourseHero({
@@ -39,6 +41,7 @@ export function CourseHero({
   isEnrolled,
   user,
   selectedVideo,
+  onEnroll,
 }: CourseHeroProps) {
   return (
     <div className="bg-black text-white py-12">
@@ -91,8 +94,14 @@ export function CourseHero({
               </div>
             </div>
             {!isEnrolled && user && (
-              <Button size="lg" className="w-full md:w-auto border">
-                Enroll for ${course.price.toFixed(2)}
+              <Button
+                size="lg"
+                className="w-full md:w-auto border"
+                onClick={onEnroll}
+              >
+                {course.isFree
+                  ? "Enroll Now (Free)"
+                  : `Enroll for $${course.price.toFixed(2)}`}
               </Button>
             )}
           </div>
