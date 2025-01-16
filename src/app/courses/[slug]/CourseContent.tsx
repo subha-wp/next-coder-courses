@@ -20,7 +20,7 @@ export function CourseContent({
 }: CourseContentProps) {
   return (
     <Card className="p-6">
-      <h2 className="text-2xl font-bold mb-6">Course Content</h2>
+      <h2 className="text-xl font-bold mb-6">Course Content</h2>
       <div className="space-y-6">
         {course.lessons.map((lesson, index) => {
           const isLessonAccessible = isEnrolled || lesson.isFree;
