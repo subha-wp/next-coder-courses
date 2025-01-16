@@ -31,7 +31,7 @@ export function VideoPlayer({
   };
 
   return (
-    <div className="relative aspect-video bg-gray-100 rounded-lg overflow-hidden">
+    <div className="relative aspect-video overflow-hidden">
       <video
         src={videoUrl}
         className="w-full h-full object-cover"

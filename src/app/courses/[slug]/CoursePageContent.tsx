@@ -68,7 +68,7 @@ export default function CoursePageContent({
         selectedVideo={selectedVideo}
         onEnroll={handleEnroll}
       />
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-2 py-6">
         <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-2">
             <CourseContent

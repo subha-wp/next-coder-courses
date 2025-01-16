@@ -33,7 +33,7 @@ export function CourseHero({
 
   return (
     <div className="bg-black text-white py-4 md:py-12">
-      <div className="container mx-auto px-2">
+      <div className="container mx-auto ">
         <div className="grid md:grid-cols-3 gap-8 items-start">
           <div className="md:col-span-2">
             <VideoHero
@@ -43,7 +43,7 @@ export function CourseHero({
             />
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-6 px-2">
             <div className="flex items-start justify-between">
               {selectedVideo ? (
                 <h2 className="font-sembold">Now Playing</h2>
