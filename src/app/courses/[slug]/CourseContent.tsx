@@ -1,13 +1,23 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-//@ts-nocheck
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { FileText, Lock, Play } from "lucide-react";
 import Link from "next/link";
+import { Course, User, Video } from "./types";
 
-export function CourseContent({ course, isEnrolled, user, onVideoSelect }) {
+interface CourseContentProps {
+  course: Course;
+  isEnrolled: boolean;
+  user: User | null;
+  onVideoSelect: (video: Video) => void;
+}
+
+export function CourseContent({
+  course,
+  isEnrolled,
+  user,
+  onVideoSelect,
+}: CourseContentProps) {
   return (
     <Card className="p-6">
       <h2 className="text-2xl font-bold mb-6">Course Content</h2>
@@ -40,7 +50,7 @@ export function CourseContent({ course, isEnrolled, user, onVideoSelect }) {
                 </div>
                 {isLessonAccessible ? (
                   <Button variant="outline" size="sm" asChild>
-                    <Link href={`/courses/${course.slug}/lessons/${lesson.id}`}>
+                    <Link href={`/courses/${course.id}/lessons/${lesson.id}`}>
                       {isEnrolled ? "Continue" : "Preview"}
                     </Link>
                   </Button>
@@ -55,15 +65,15 @@ export function CourseContent({ course, isEnrolled, user, onVideoSelect }) {
                   {lesson.videos.length > 0 && (
                     <div className="space-y-2 mt-4 mb-4">
                       <h4 className="font-medium">Videos</h4>
-                      {lesson.videos.map((video: any) => (
-                        <div
+                      {lesson.videos.map((video) => (
+                        <button
                           key={video.id}
-                          className="flex items-center gap-2 text-sm cursor-pointer hover:text-primary"
+                          className="flex items-center gap-2 text-sm w-full text-left hover:text-primary transition-colors"
                           onClick={() => onVideoSelect(video)}
                         >
-                          <Play className="w-4 h-4" />
+                          <Play className="w-4 h-4 flex-shrink-0" />
                           <span>{video.title}</span>
-                        </div>
+                        </button>
                       ))}
                     </div>
                   )}
@@ -75,7 +85,7 @@ export function CourseContent({ course, isEnrolled, user, onVideoSelect }) {
                           key={material.id}
                           className="flex items-center gap-2 text-sm"
                         >
-                          <FileText className="w-4 h-4" />
+                          <FileText className="w-4 h-4 flex-shrink-0" />
                           <span>{material.title}</span>
                         </div>
                       ))}

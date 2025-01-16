@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-//@ts-nocheck
 "use client";
 
 import { useState, useCallback } from "react";
@@ -8,18 +6,30 @@ import { CourseContent } from "./CourseContent";
 import { CourseSidebar } from "./CourseSidebar";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Course, User, Video } from "./types";
+
+interface CoursePageContentProps {
+  course: Course;
+  user: User | null;
+  isEnrolled: boolean;
+  totalDuration: number;
+}
 
 export default function CoursePageContent({
   course,
   user,
   isEnrolled,
   totalDuration,
-}) {
-  const [selectedVideo, setSelectedVideo] = useState();
+}: CoursePageContentProps) {
+  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const router = useRouter();
 
-  const handleVideoSelect = useCallback((video) => {
+  const handleVideoSelect = useCallback((video: Video) => {
     setSelectedVideo(video);
+  }, []);
+
+  const handleCloseVideo = useCallback(() => {
+    setSelectedVideo(null);
   }, []);
 
   const handleEnroll = async () => {
@@ -68,7 +78,12 @@ export default function CoursePageContent({
               onVideoSelect={handleVideoSelect}
             />
           </div>
-          <CourseSidebar isEnrolled={isEnrolled} course={course} />
+          <CourseSidebar
+            isEnrolled={isEnrolled}
+            course={course}
+            selectedVideo={selectedVideo}
+            onClose={handleCloseVideo}
+          />
         </div>
       </div>
     </>

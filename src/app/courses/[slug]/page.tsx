@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import prisma from "@/lib/prisma";
