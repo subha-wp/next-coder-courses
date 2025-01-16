@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import { MobileNav } from "@/components/MobileNav";
 
 async function getCourses() {
   return await prisma.course.findMany({
@@ -64,7 +65,7 @@ function CourseList() {
 
 export default function CoursesPage() {
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-8 px-2">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-6">Available Courses</h1>
         <div className="relative">
@@ -86,6 +87,7 @@ export default function CoursesPage() {
       >
         <CourseList />
       </Suspense>
+      <MobileNav />
     </div>
   );
 }

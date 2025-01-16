@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import prisma from "@/lib/prisma";
 import { validateRequest } from "@/lib/auth";
 import CoursePageContent from "./CoursePageContent";
+import { MobileNav } from "@/components/MobileNav";
 
 export async function generateMetadata({
   params,
@@ -93,7 +94,7 @@ export default async function CoursePage({
   const { course, user, isEnrolled, totalDuration } = await getCourseData(slug);
 
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="min-h-screen bg-muted/30 pb-20 md:pb-0">
       <Suspense fallback={<div>Loading...</div>}>
         <CoursePageContent
           course={course}
@@ -102,6 +103,7 @@ export default async function CoursePage({
           totalDuration={totalDuration}
         />
       </Suspense>
+      <MobileNav />
     </div>
   );
 }
