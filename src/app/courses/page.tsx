@@ -1,17 +1,44 @@
-// src/app/courses/page.tsx
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 //@ts-nocheck
-import { Suspense, use } from "react";
-import CourseCard from "@/components/course/CourseCard";
+import { Suspense } from "react";
+import { Metadata } from "next";
 import prisma from "@/lib/prisma";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Input } from "@/components/ui/input";
-
 import { MobileNav } from "@/components/MobileNav";
 import { validateRequest } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { Search } from "lucide-react";
+import { SearchableCourseList } from "./searchable-course-list";
+
+export const metadata: Metadata = {
+  title: "Courses | nextcoder",
+  description: "Browse our collection of professional development courses",
+  keywords: [
+    "online courses",
+    "professional development",
+    "learning",
+    "education",
+    "skills development",
+  ],
+  openGraph: {
+    title: "Courses | nextcoder",
+    description: "Browse our collection of professional development courses",
+    type: "website",
+    images: [
+      {
+        url: "/og-courses.jpg",
+        width: 1200,
+        height: 630,
+        alt: "nextcoder Courses",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Courses | nextcoder",
+    description: "Browse our collection of professional development courses",
+  },
+};
 
 async function getCourses() {
   return await prisma.course.findMany({
@@ -44,57 +71,30 @@ function CourseSkeleton() {
   );
 }
 
-function CourseList() {
-  const courses = use(getCourses());
-
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {courses.map((course) => (
-        <CourseCard
-          key={course.id}
-          course={{
-            ...course,
-            totalDuration: course.lessons.reduce(
-              (acc, lesson) => acc + (lesson.duration || 0),
-              0
-            ),
-            lessonCount: course._count.lessons,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
 export default async function CoursesPage() {
   const { user } = await validateRequest();
   if (!user) {
     redirect("/auth/login");
   }
+
+  const courses = await getCourses();
+
   return (
-    <div className="container mx-auto py-8 px-2">
+    <div className="container mx-auto py-8 px-2 mb-12">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-6">Available Courses</h1>
-
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
-          <Input
-            placeholder="Search courses..."
-            className="pl-10 w-full max-w-md"
-          />
-        </div>
+        <Suspense
+          fallback={
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, i) => (
+                <CourseSkeleton key={i} />
+              ))}
+            </div>
+          }
+        >
+          <SearchableCourseList initialCourses={courses} />
+        </Suspense>
       </div>
-      <Suspense
-        fallback={
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, i) => (
-              <CourseSkeleton key={i} />
-            ))}
-          </div>
-        }
-      >
-        <CourseList />
-      </Suspense>
       <MobileNav />
     </div>
   );
