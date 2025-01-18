@@ -46,7 +46,10 @@ export async function register(formData: FormData) {
   try {
     const existingUser = await prisma.user.findFirst({
       where: {
-        OR: [{ email }, { phoneNumber }],
+        OR: [
+          { email: email || undefined },
+          { phoneNumber: phoneNumber || undefined },
+        ],
       },
     });
 
@@ -58,8 +61,8 @@ export async function register(formData: FormData) {
     const user = await prisma.user.create({
       data: {
         name,
-        email,
-        phoneNumber,
+        email: email || undefined,
+        phoneNumber: phoneNumber || undefined,
         hashedPassword,
       },
     });
