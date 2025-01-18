@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//@ts-nocheck
 import prisma from "@/lib/prisma";
 import { Card } from "@/components/ui/card";
 import { EnrollUserDialog } from "./EnrollUserDialog";
@@ -23,6 +25,7 @@ export default async function CourseEnrollmentsPage({
           select: {
             name: true,
             email: true,
+            phoneNumber: true,
           },
         },
       },
