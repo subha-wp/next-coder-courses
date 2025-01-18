@@ -7,13 +7,13 @@ import { verify } from "@node-rs/argon2";
 import { lucia } from "@/lib/auth";
 
 const loginSchema = z.object({
-  identifier: z.string().min(1, "Email or phone number is required"),
+  phoneNumber: z.string().min(1, "Phone number is required"),
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
 export async function login(formData: FormData) {
   const result = loginSchema.safeParse({
-    identifier: formData.get("identifier"),
+    phoneNumber: formData.get("phoneNumber"),
     password: formData.get("password"),
   });
 
@@ -21,18 +21,16 @@ export async function login(formData: FormData) {
     return { error: result.error.issues[0].message };
   }
 
-  const { identifier, password } = result.data;
+  const { phoneNumber, password } = result.data;
 
   try {
     const existingUser = await prisma.user.findFirst({
-      where: {
-        OR: [{ email: identifier }, { phoneNumber: identifier }],
-      },
+      where: { phoneNumber },
       select: { id: true, hashedPassword: true, role: true },
     });
 
     if (!existingUser) {
-      return { error: "Invalid email/phone number or password" };
+      return { error: "Invalid phone number or password" };
     }
 
     const validPassword = await verify(existingUser.hashedPassword, password, {
@@ -43,7 +41,7 @@ export async function login(formData: FormData) {
     });
 
     if (!validPassword) {
-      return { error: "Invalid email/phone number or password" };
+      return { error: "Invalid phone number or password" };
     }
 
     const session = await lucia.createSession(existingUser.id, {});

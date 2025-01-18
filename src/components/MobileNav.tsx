@@ -1,8 +1,9 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, User, GraduationCap } from "lucide-react";
+import { BookOpen, User, GraduationCap, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { logout } from "@/app/auth/actions";
 
 export function MobileNav() {
   const pathname = usePathname();
@@ -46,6 +47,13 @@ export function MobileNav() {
             </Link>
           );
         })}
+        <button
+          onClick={() => logout()}
+          className="flex flex-col items-center gap-1 py-2 px-3 rounded-lg transition-colors text-red-600 hover:text-red-700"
+        >
+          <LogOut className="w-6 h-6" />
+          <span className="text-xs font-medium">Logout</span>
+        </button>
       </nav>
     </div>
   );

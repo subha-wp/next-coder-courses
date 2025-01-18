@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-//@ts-nocheck
 "use server";
 
 import { z } from "zod";
@@ -11,27 +9,18 @@ import { hash } from "@node-rs/argon2";
 const registerSchema = z
   .object({
     name: z.string().min(2, "Name must be at least 2 characters"),
-    email: z.string().email("Invalid email address").optional(),
-    phoneNumber: z
-      .string()
-      .regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone number")
-      .optional(),
+    phoneNumber: z.string().regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone number"),
     password: z.string().min(8, "Password must be at least 8 characters"),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
     path: ["confirmPassword"],
-  })
-  .refine((data) => data.email || data.phoneNumber, {
-    message: "Either email or phone number must be provided",
-    path: ["email", "phoneNumber"],
   });
 
 export async function register(formData: FormData) {
   const result = registerSchema.safeParse({
     name: formData.get("name"),
-    email: formData.get("email"),
     phoneNumber: formData.get("phoneNumber"),
     password: formData.get("password"),
     confirmPassword: formData.get("confirmPassword"),
@@ -41,28 +30,22 @@ export async function register(formData: FormData) {
     return { error: result.error.issues[0].message };
   }
 
-  const { name, email, phoneNumber, password } = result.data;
+  const { name, phoneNumber, password } = result.data;
 
   try {
     const existingUser = await prisma.user.findFirst({
-      where: {
-        OR: [
-          { email: email || undefined },
-          { phoneNumber: phoneNumber || undefined },
-        ],
-      },
+      where: { phoneNumber },
     });
 
     if (existingUser) {
-      return { error: "Email or phone number already registered" };
+      return { error: "Phone number already registered" };
     }
 
     const hashedPassword = await hash(password);
     const user = await prisma.user.create({
       data: {
         name,
-        email: email || undefined,
-        phoneNumber: phoneNumber || undefined,
+        phoneNumber,
         hashedPassword,
       },
     });

@@ -19,10 +19,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { login } from "./action";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff, ArrowRight, User } from "lucide-react";
+import { Eye, EyeOff, ArrowRight, Phone } from "lucide-react";
 
 const schema = z.object({
-  identifier: z.string().min(1, "Email or phone number is required"),
+  phoneNumber: z.string().min(1, "Phone number is required"),
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
@@ -34,7 +34,7 @@ export default function LoginPage() {
   const form = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
-      identifier: "",
+      phoneNumber: "",
       password: "",
     },
   });
@@ -43,7 +43,7 @@ export default function LoginPage() {
     try {
       setLoading(true);
       const formData = new FormData();
-      formData.append("identifier", values.identifier);
+      formData.append("phoneNumber", values.phoneNumber);
       formData.append("password", values.password);
 
       const result = await login(formData);
@@ -75,21 +75,21 @@ export default function LoginPage() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
-                name="identifier"
+                name="phoneNumber"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-sm font-medium">
-                      Email or Phone Number
+                      Phone Number
                     </FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Input
                           {...field}
-                          type="text"
-                          placeholder="Enter your email or phone number"
+                          type="tel"
+                          placeholder="Enter your phone number"
                           className="rounded-full pl-10"
                         />
-                        <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500" />
+                        <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500" />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -112,7 +112,7 @@ export default function LoginPage() {
                           placeholder="Enter your password"
                           className="rounded-full pl-10 pr-10"
                         />
-                        <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500" />
+                        <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500" />
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}

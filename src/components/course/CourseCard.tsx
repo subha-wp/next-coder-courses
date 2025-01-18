@@ -57,7 +57,7 @@ export default function CourseCard({ course }: CourseCardProps) {
         </div>
       </CardContent>
       <CardFooter className="flex justify-between items-center">
-        <span className="font-bold text-lg">${course.price.toFixed(2)}</span>
+        <span className="font-bold text-lg">₹{course.price.toFixed(2)}</span>
         <Button asChild>
           <Link href={`/courses/${course.slug}`}>View Course</Link>
         </Button>

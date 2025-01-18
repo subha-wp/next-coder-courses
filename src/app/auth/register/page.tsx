@@ -19,41 +19,30 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { register } from "./action";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff, ArrowRight, User, Mail, Lock, Phone } from "lucide-react";
-import { Switch } from "@/components/ui/switch";
+import { Eye, EyeOff, ArrowRight, User, Phone, Lock } from "lucide-react";
 
 const schema = z
   .object({
     name: z.string().min(2, "Name must be at least 2 characters"),
-    email: z.string().email("Invalid email address").optional(),
-    phoneNumber: z
-      .string()
-      .regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone number")
-      .optional(),
+    phoneNumber: z.string().regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone number"),
     password: z.string().min(8, "Password must be at least 8 characters"),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
     path: ["confirmPassword"],
-  })
-  .refine((data) => data.email || data.phoneNumber, {
-    message: "Either email or phone number must be provided",
-    path: ["email", "phoneNumber"],
   });
 
 export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [usePhoneNumber, setUsePhoneNumber] = useState(false);
   const router = useRouter();
 
   const form = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
       name: "",
-      email: "",
       phoneNumber: "",
       password: "",
       confirmPassword: "",
@@ -65,9 +54,7 @@ export default function RegisterPage() {
       setLoading(true);
       const formData = new FormData();
       formData.append("name", values.name);
-      if (values.email) formData.append("email", values.email);
-      if (values.phoneNumber)
-        formData.append("phoneNumber", values.phoneNumber);
+      formData.append("phoneNumber", values.phoneNumber);
       formData.append("password", values.password);
       formData.append("confirmPassword", values.confirmPassword);
 
@@ -77,7 +64,7 @@ export default function RegisterPage() {
         toast.error(result.error);
       } else if (result?.success) {
         toast.success("Registration successful! Redirecting...");
-        router.push("/user-dashboard");
+        router.push("/courses");
       }
     } catch (error) {
       toast.error("Something went wrong");
@@ -88,7 +75,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gradient-to-b from-primary/20 to-background">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
       <Card className="w-full max-w-md overflow-hidden shadow-lg">
         <CardHeader className="bg-primary text-primary-foreground p-6">
           <CardTitle className="text-3xl font-bold text-center">
@@ -96,19 +83,6 @@ export default function RegisterPage() {
           </CardTitle>
         </CardHeader>
         <CardContent className="p-6 space-y-6">
-          <div className="flex items-center justify-center space-x-2">
-            <span className={`text-sm ${!usePhoneNumber ? "font-bold" : ""}`}>
-              Email
-            </span>
-            <Switch
-              checked={usePhoneNumber}
-              onCheckedChange={setUsePhoneNumber}
-              aria-label="Toggle between email and phone number"
-            />
-            <span className={`text-sm ${usePhoneNumber ? "font-bold" : ""}`}>
-              Phone
-            </span>
-          </div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
@@ -132,70 +106,29 @@ export default function RegisterPage() {
                   </FormItem>
                 )}
               />
-              <div className="relative">
-                <div
-                  className={`transition-all duration-300 ${
-                    usePhoneNumber
-                      ? "opacity-0 -translate-x-full"
-                      : "opacity-100 translate-x-0"
-                  }`}
-                >
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-sm font-medium">
-                          Email
-                        </FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Input
-                              {...field}
-                              type="email"
-                              placeholder="Enter your email"
-                              className="rounded-full pl-10"
-                            />
-                            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500" />
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div
-                  className={`absolute top-0 left-0 w-full transition-all duration-300 ${
-                    usePhoneNumber
-                      ? "opacity-100 translate-x-0"
-                      : "opacity-0 translate-x-full"
-                  }`}
-                >
-                  <FormField
-                    control={form.control}
-                    name="phoneNumber"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-sm font-medium">
-                          Phone Number
-                        </FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Input
-                              {...field}
-                              type="tel"
-                              placeholder="Enter your phone number"
-                              className="rounded-full pl-10"
-                            />
-                            <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500" />
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
+              <FormField
+                control={form.control}
+                name="phoneNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm font-medium">
+                      Phone Number
+                    </FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          {...field}
+                          type="tel"
+                          placeholder="Enter your phone number"
+                          className="rounded-full pl-10"
+                        />
+                        <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500" />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="password"
