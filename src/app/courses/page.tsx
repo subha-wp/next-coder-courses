@@ -7,8 +7,12 @@ import prisma from "@/lib/prisma";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+
 import { MobileNav } from "@/components/MobileNav";
+import { validateRequest } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { Search } from "lucide-react";
+import LogoutButton from "@/components/LogoutButton";
 
 async function getCourses() {
   return await prisma.course.findMany({
@@ -63,11 +67,16 @@ function CourseList() {
   );
 }
 
-export default function CoursesPage() {
+export default async function CoursesPage() {
+  const { user } = await validateRequest();
+  if (!user) {
+    redirect("/auth/login");
+  }
   return (
     <div className="container mx-auto py-8 px-2">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-6">Available Courses</h1>
+        <LogoutButton />
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
           <Input
