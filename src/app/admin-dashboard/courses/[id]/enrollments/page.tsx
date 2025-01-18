@@ -73,6 +73,9 @@ export default async function CourseEnrollmentsPage({
                   Email
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Email
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Type
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -93,10 +96,20 @@ export default async function CourseEnrollmentsPage({
                     {enrollment.user.email}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
+                    {enrollment.user.phoneNumber}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
                     {enrollment.enrollmentType}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {new Date(enrollment.createdAt).toLocaleDateString()}
+                    {new Date(enrollment.createdAt).toLocaleDateString(
+                      "en-GB",
+                      {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                      }
+                    )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {enrollment.status}
