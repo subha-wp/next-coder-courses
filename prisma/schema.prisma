@@ -130,6 +130,9 @@ model StreamSession {
   courseId     String   // Course associated with the live session
   title        String
   description  String?
+  thumbnailUrl String?
+  price       Float
+  isFree      Boolean      @default(false)
   startTime    DateTime
   endTime      DateTime?
   status       StreamStatus @default(SCHEDULED) // ENUM: SCHEDULED, LIVE, ENDED
