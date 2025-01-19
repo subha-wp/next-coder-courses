@@ -25,6 +25,7 @@ model User {
   payments       Payment[]
   streamSessions StreamSession[]
   sessions       Session[]
+  streamParticipants StreamParticipant[]
 }
 
 model Session {
@@ -124,16 +125,37 @@ model Payment {
 }
 
 model StreamSession {
-  id        String   @id @default(cuid())
-  title     String
-  startTime DateTime
-  endTime   DateTime
-  courseId  String
-  course    Course   @relation(fields: [courseId], references: [id])
-  instructorId String
-  instructor User    @relation(fields: [instructorId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String   @id @default(cuid())
+  instructorId String   // User hosting the session
+  courseId     String   // Course associated with the live session
+  title        String
+  description  String?
+  startTime    DateTime
+  endTime      DateTime?
+  status       StreamStatus @default(SCHEDULED) // ENUM: SCHEDULED, LIVE, ENDED
+  recordingUrl String?  // Link to recorded session (optional)
+  
+  instructor   User     @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  course       Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  participants StreamParticipant[]
+}
+
+model StreamParticipant {
+  id          String   @id @default(cuid())
+  sessionId   String
+  userId      String
+  joinedAt    DateTime @default(now())
+  
+  session     StreamSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, userId]) // Ensures no duplicate participants
+}
+
+enum StreamStatus {
+  SCHEDULED
+  LIVE
+  ENDED
 }
 
 enum Role {
