@@ -9,7 +9,7 @@ export default async function Layout({
 }) {
   const { user } = await validateRequest();
 
-  if (user) redirect("/couses");
+  if (user) redirect("/courses");
 
   return <>{children}</>;
 }
