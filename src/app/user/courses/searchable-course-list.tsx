@@ -103,24 +103,24 @@ export function SearchableCourseList({
 
   return (
     <div>
-      <div className="relative mb-6">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+      <div className="relative mb-6 border-b border-primary rounded-b-3xl shadow-sm shadow-lime-200 p-4 ">
+        <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
         <Input
           placeholder="Search courses..."
-          className="pl-10 w-full max-w-md"
+          className="pl-10 w-full max-w-md border-primary"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
 
       {courses.length === 0 && !loading ? (
-        <div className="text-center py-8">
+        <div className="text-center py-8 px-2">
           <p className="text-muted-foreground">
             No courses found matching your search.
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-2">
           {courses.map((course, index) => (
             <div
               key={course.id}

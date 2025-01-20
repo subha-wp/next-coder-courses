@@ -2,7 +2,6 @@ import { redirect } from "next/navigation";
 import { validateRequest } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { EnrolledCourseCard } from "@/components/course/EnrolledCourseCard";
-import { MobileNav } from "@/components/MobileNav";
 
 export default async function MyCoursesPage() {
   const { user } = await validateRequest();
@@ -52,7 +51,6 @@ export default async function MyCoursesPage() {
           ))}
         </div>
       )}
-      <MobileNav />
     </div>
   );
 }

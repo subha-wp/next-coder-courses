@@ -11,17 +11,17 @@ export function MobileNav() {
   const navItems = [
     {
       label: "Courses",
-      href: "/courses",
+      href: "/user/courses",
       icon: BookOpen,
     },
     {
       label: "My Courses",
-      href: "/my-courses",
+      href: "/user/my-courses",
       icon: GraduationCap,
     },
     {
       label: "Profile",
-      href: "/profile",
+      href: "/user/profile",
       icon: User,
     },
   ];
@@ -36,23 +36,37 @@ export function MobileNav() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex flex-col items-center gap-1 py-2 px-3 rounded-lg transition-colors",
+                "flex flex-col items-center gap-1 py-2 px-3 rounded-lg transition-all duration-300 ease-in-out",
                 isActive
                   ? "text-primary"
                   : "text-muted-foreground hover:text-primary"
               )}
             >
-              <item.icon className="w-6 h-6" />
-              <span className="text-xs font-medium">{item.label}</span>
+              <item.icon
+                className={cn(
+                  "w-6 h-6 transition-transform duration-1000 ease-in-out",
+                  isActive ? "animate-bounce" : ""
+                )}
+              />
+              <span
+                className={cn(
+                  "text-xs font-medium transition-all duration-300 ease-in-out",
+                  isActive ? "font-bold" : "hover:font-semibold"
+                )}
+              >
+                {item.label}
+              </span>
             </Link>
           );
         })}
         <button
           onClick={() => logout()}
-          className="flex flex-col items-center gap-1 py-2 px-3 rounded-lg transition-colors text-red-600 hover:text-red-700"
+          className="flex flex-col items-center gap-1 py-2 px-3 rounded-lg transition-all duration-300 ease-in-out text-red-600 hover:text-red-700"
         >
-          <LogOut className="w-6 h-6" />
-          <span className="text-xs font-medium">Logout</span>
+          <LogOut className="w-6 h-6 transition-transform duration-300 ease-in-out hover:scale-110" />
+          <span className="text-xs font-medium transition-all duration-300 ease-in-out hover:font-semibold">
+            Logout
+          </span>
         </button>
       </nav>
     </div>

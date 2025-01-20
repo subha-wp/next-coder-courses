@@ -54,7 +54,7 @@ export async function login(formData: FormData) {
     );
 
     const route =
-      existingUser.role === "ADMIN" ? "/admin-dashboard" : "/courses";
+      existingUser.role === "ADMIN" ? "/admin-dashboard" : "/user/courses";
     return { success: true, route };
   } catch (error) {
     console.error("Login error:", error);

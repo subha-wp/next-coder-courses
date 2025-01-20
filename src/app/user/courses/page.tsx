@@ -5,10 +5,10 @@ import { Metadata } from "next";
 import prisma from "@/lib/prisma";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { MobileNav } from "@/components/MobileNav";
-import { validateRequest } from "@/lib/auth";
-import { redirect } from "next/navigation";
+
 import { SearchableCourseList } from "./searchable-course-list";
+import LogoutButton from "@/components/LogoutButton";
+import { validateRequest } from "@/lib/auth";
 
 export const metadata: Metadata = {
   title: "Courses | nextcoder",
@@ -73,19 +73,20 @@ function CourseSkeleton() {
 
 export default async function CoursesPage() {
   const { user } = await validateRequest();
-  if (!user) {
-    redirect("/auth/login");
-  }
-
   const courses = await getCourses();
 
   return (
-    <div className="container mx-auto py-8 px-2 mb-12">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-6">Available Courses</h1>
+    <div className="container mx-auto py-4 mb-12 bg-black">
+      <div className="mb-4">
+        <div className="flex justify-between items-start px-4">
+          <h1 className="text-xl font-bold mb-2">Hi,{user.name}</h1>
+          <div>
+            <LogoutButton />
+          </div>
+        </div>
         <Suspense
           fallback={
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-2">
               {[...Array(6)].map((_, i) => (
                 <CourseSkeleton key={i} />
               ))}
@@ -95,7 +96,6 @@ export default async function CoursesPage() {
           <SearchableCourseList initialCourses={courses} />
         </Suspense>
       </div>
-      <MobileNav />
     </div>
   );
 }

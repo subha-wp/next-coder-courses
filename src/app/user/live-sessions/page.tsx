@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { validateRequest } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import LiveSessionCard from "./LiveSessionCard";
-import { MobileNav } from "@/components/MobileNav";
+
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -60,7 +60,6 @@ export default async function LiveSessionsPage() {
           ))}
         </div>
       )}
-      <MobileNav />
     </div>
   );
 }

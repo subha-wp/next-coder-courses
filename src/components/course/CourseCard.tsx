@@ -28,8 +28,8 @@ type CourseCardProps = {
 
 export default function CourseCard({ course }: CourseCardProps) {
   return (
-    <Card className="flex flex-col h-full hover:shadow-lg transition-shadow duration-300">
-      <div className="relative aspect-video w-full">
+    <Card className="flex flex-col h-full hover:shadow-lg transition-shadow duration-300 border-primary p-1">
+      <div className="relative aspect-video w-full border-b border-primary">
         <Image
           src={course.thumbnailUrl || "/course-placeholder.jpg"}
           alt={course.title}
@@ -59,7 +59,7 @@ export default function CourseCard({ course }: CourseCardProps) {
       <CardFooter className="flex justify-between items-center">
         <span className="font-bold text-lg">₹{course.price.toFixed(2)}</span>
         <Button asChild>
-          <Link href={`/courses/${course.slug}`}>View Course</Link>
+          <Link href={`/user/courses/${course.slug}`}>View Course</Link>
         </Button>
       </CardFooter>
     </Card>

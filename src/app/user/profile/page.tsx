@@ -1,15 +1,9 @@
-import { redirect } from "next/navigation";
 import { validateRequest } from "@/lib/auth";
 import { UpdateProfileForm } from "./UpdateProfileForm";
 import { UpdatePasswordForm } from "./UpdatePasswordForm";
-import { MobileNav } from "@/components/MobileNav";
 
 export default async function ProfilePage() {
   const { user } = await validateRequest();
-
-  if (!user) {
-    redirect("/auth/login");
-  }
 
   return (
     <>
@@ -20,7 +14,6 @@ export default async function ProfilePage() {
           <UpdatePasswordForm />
         </div>
       </div>
-      <MobileNav />
     </>
   );
 }
