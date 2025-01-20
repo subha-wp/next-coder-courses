@@ -11,11 +11,7 @@ interface VideoHeroProps {
   selectedVideo: { url: string; title: string } | null;
 }
 
-export function VideoHero({
-  course,
-  isLoggedIn,
-  selectedVideo,
-}: VideoHeroProps) {
+export function VideoHero({ course, selectedVideo }: VideoHeroProps) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlayClick = useCallback(() => {
@@ -25,11 +21,7 @@ export function VideoHero({
   if (selectedVideo && isPlaying) {
     return (
       <div className="relative aspect-video">
-        <VideoPlayer
-          videoUrl={selectedVideo.url}
-          isLoggedIn={isLoggedIn}
-          lessonTitle={selectedVideo.title}
-        />
+        <VideoPlayer videoUrl={selectedVideo.url} />
       </div>
     );
   }
