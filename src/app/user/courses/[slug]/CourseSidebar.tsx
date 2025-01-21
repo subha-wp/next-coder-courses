@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Award, FileText, Clock } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -11,7 +12,7 @@ interface CourseSidebarProps {
 export function CourseSidebar({ isEnrolled }: CourseSidebarProps) {
   return (
     <div className="space-y-6">
-      {isEnrolled && (
+      {/* {isEnrolled && (
         <Card className="p-6">
           <h3 className="font-semibold mb-4">Your Progress</h3>
           <Progress value={33} className="mb-2" />
@@ -19,7 +20,7 @@ export function CourseSidebar({ isEnrolled }: CourseSidebarProps) {
             4 of 12 lessons completed
           </p>
         </Card>
-      )}
+      )} */}
       <Card className="p-6">
         <h3 className="font-semibold mb-4">Course Features</h3>
         <ul className="space-y-3">

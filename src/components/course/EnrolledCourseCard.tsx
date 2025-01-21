@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -42,7 +43,7 @@ export default function EnrolledCourseCard({
       <CardHeader>
         <CardTitle className="line-clamp-2">{course.title}</CardTitle>
       </CardHeader>
-      <CardContent className="flex-grow">
+      {/* <CardContent className="flex-grow">
         <div className="flex items-center gap-2">
           <BarChart className="w-4 h-4 text-primary" />
           <div className="w-full bg-muted rounded-full h-2.5">
@@ -55,7 +56,7 @@ export default function EnrolledCourseCard({
             {course.progress}%
           </span>
         </div>
-      </CardContent>
+      </CardContent> */}
       <CardFooter>
         <Button asChild className="w-full">
           <Link href={`/user/courses/${course.slug}`}>Continue Learning</Link>
