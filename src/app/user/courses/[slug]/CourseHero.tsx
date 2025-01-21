@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import {
   BookOpen,
@@ -11,6 +13,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { VideoHero } from "@/components/VideoHero";
 import { Course, User, Video } from "./types";
+import { toast } from "sonner";
 
 interface CourseHeroProps {
   course: Course;
@@ -30,6 +33,82 @@ export function CourseHero({
   onEnroll,
 }: CourseHeroProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handlePayment = async () => {
+    try {
+      setIsProcessing(true);
+
+      // Initialize payment
+      const response = await fetch("/api/payments/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          courseId: course.id,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to initialize payment");
+      }
+
+      const { orderId, amount, currency, keyId } = await response.json();
+
+      // Create Razorpay payment
+      const options = {
+        key: keyId,
+        amount,
+        currency,
+        name: "nextCoder",
+        description: `Enrollment for ${course.title}`,
+        order_id: orderId,
+        handler: async function (response: any) {
+          try {
+            // Verify payment
+            const verifyResponse = await fetch("/api/payments/verify", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                courseId: course.id,
+              }),
+            });
+
+            if (!verifyResponse.ok) {
+              throw new Error("Payment verification failed");
+            }
+
+            toast.success(
+              "Payment successful! You are now enrolled in the course."
+            );
+            onEnroll();
+          } catch (error) {
+            toast.error("Payment verification failed. Please contact support.");
+          }
+        },
+        prefill: {
+          name: user?.name,
+          email: user?.email,
+        },
+        theme: {
+          color: "#000000",
+        },
+      };
+
+      const razorpay = new (window as any).Razorpay(options);
+      razorpay.open();
+    } catch (error) {
+      toast.error("Failed to initialize payment. Please try again.");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   return (
     <div className="bg-black text-white py-4 md:py-12">
@@ -113,10 +192,17 @@ export function CourseHero({
             )}
 
             {!isEnrolled && user && (
-              <Button size="lg" className="w-full border" onClick={onEnroll}>
-                {course.isFree
+              <Button
+                size="lg"
+                className="w-full border"
+                onClick={course.isFree ? onEnroll : handlePayment}
+                disabled={isProcessing}
+              >
+                {isProcessing
+                  ? "Processing..."
+                  : course.isFree
                   ? "Enroll Now (Free)"
-                  : `Enroll for $${course.price.toFixed(2)}`}
+                  : `Enroll for ₹${course.price.toFixed(2)}`}
               </Button>
             )}
           </div>

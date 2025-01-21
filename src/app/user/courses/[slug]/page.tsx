@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
+//@ts-nocheck
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import prisma from "@/lib/prisma";
 import { validateRequest } from "@/lib/auth";
 import CoursePageContent from "./CoursePageContent";
 import { MobileNav } from "@/components/MobileNav";
+import Script from "next/script";
 
 export async function generateMetadata({
   params,
@@ -97,6 +98,7 @@ export default async function CoursePage({
 
   return (
     <div className="min-h-screen bg-muted/30 pb-20 md:pb-0">
+      <Script src="https://checkout.razorpay.com/v1/checkout.js" />
       <Suspense fallback={<div>Loading...</div>}>
         <CoursePageContent
           course={course}
