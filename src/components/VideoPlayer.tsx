@@ -12,6 +12,7 @@ import {
   VolumeX,
 } from "lucide-react";
 import screenfull from "screenfull";
+import Hls from "hls.js";
 
 interface VideoPlayerProps {
   videoUrl: string;
@@ -27,6 +28,37 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const hlsRef = useRef<Hls | null>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (Hls.isSupported()) {
+      const hls = new Hls();
+      hlsRef.current = hls;
+      hls.loadSource(videoUrl);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        video.play().catch((error) => {
+          console.error("Autoplay was prevented:", error);
+        });
+      });
+    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+      video.src = videoUrl;
+      video.addEventListener("loadedmetadata", () => {
+        video.play().catch((error) => {
+          console.error("Autoplay was prevented:", error);
+        });
+      });
+    }
+
+    return () => {
+      if (hlsRef.current) {
+        hlsRef.current.destroy();
+      }
+    };
+  }, [videoUrl]);
 
   useEffect(() => {
     const handleFullScreenChange = () => {
@@ -81,14 +113,6 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
     };
   }, [isPlaying]);
 
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch((error) => {
-        console.error("Autoplay was prevented:", error);
-      });
-    }
-  }, []);
-
   const handlePlayPause = () => {
     if (videoRef.current) {
       if (isPlaying) {
@@ -140,7 +164,6 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
     >
       <video
         ref={videoRef}
-        src={videoUrl}
         className="w-full h-full object-cover"
         onClick={handlePlayPause}
         onPlay={() => setIsPlaying(true)}
