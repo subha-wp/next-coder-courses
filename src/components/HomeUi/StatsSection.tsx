@@ -17,7 +17,7 @@ export function StatsSection() {
             <p className="text-xl text-card-foreground">Global Enterprises</p>
           </div>
           <div className="bg-card p-8 rounded-lg shadow-lg transform hover:scale-105 transition-transform">
-            <h3 className="text-4xl font-bold text-primary mb-2">1M+</h3>
+            <h3 className="text-4xl font-bold text-primary mb-2">80k+</h3>
             <p className="text-xl text-card-foreground">
               Professionals Trained
             </p>

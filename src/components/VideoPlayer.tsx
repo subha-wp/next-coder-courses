@@ -81,6 +81,14 @@ export function VideoPlayer({ videoUrl }: VideoPlayerProps) {
     };
   }, [isPlaying]);
 
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch((error) => {
+        console.error("Autoplay was prevented:", error);
+      });
+    }
+  }, []);
+
   const handlePlayPause = () => {
     if (videoRef.current) {
       if (isPlaying) {

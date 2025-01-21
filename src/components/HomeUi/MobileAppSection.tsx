@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import Image from "next/image";
@@ -29,7 +30,7 @@ export function MobileAppSection() {
               your convenience.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button
+              {/* <Button
                 variant="default"
                 size="lg"
                 className="relative overflow-hidden group w-full sm:w-auto"
@@ -42,7 +43,7 @@ export function MobileAppSection() {
                   </span>
                 </div>
                 <div className="absolute inset-0 bg-primary/10 translate-y-full transition-transform group-hover:translate-y-0" />
-              </Button>
+              </Button> */}
               <Button
                 variant="default"
                 size="lg"

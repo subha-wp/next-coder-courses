@@ -1,8 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, BarChart, Users, Zap } from "lucide-react";
+import { BarChart, Users, Zap } from "lucide-react";
 import { useScrollAnimation } from "../../hooks/useScrollAnimation";
 
 export function FeaturedSolutions() {
@@ -47,15 +45,6 @@ export function FeaturedSolutions() {
                 <p className="text-card-foreground mb-6">
                   {solution.description}
                 </p>
-                <Button variant="outline" className="mt-2" asChild>
-                  <Link
-                    href={`/solutions/${solution.title
-                      .toLowerCase()
-                      .replace(/\s+/g, "-")}`}
-                  >
-                    Explore Solution <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
               </div>
             </div>
           ))}

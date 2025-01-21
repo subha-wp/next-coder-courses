@@ -1,48 +1,14 @@
-import { Award, FileText, Clock, X } from "lucide-react";
+import { Award, FileText, Clock } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Button } from "@/components/ui/button";
-import { Course, Video } from "./types";
+import type { Course } from "./types";
 
 interface CourseSidebarProps {
   isEnrolled: boolean;
   course: Course;
-  selectedVideo: Video | null;
-  onClose: () => void;
 }
 
-export function CourseSidebar({
-  isEnrolled,
-  selectedVideo,
-  onClose,
-}: CourseSidebarProps) {
-  if (selectedVideo) {
-    return (
-      <Card className="p-6">
-        <div className="flex justify-between items-start mb-4">
-          <h3 className="font-semibold">Now Playing</h3>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onClose}
-            aria-label="Close video info"
-          >
-            <X className="h-4 w-4" />
-          </Button>
-        </div>
-        <div className="space-y-4">
-          <h4 className="font-medium">{selectedVideo.title}</h4>
-          {selectedVideo.duration && (
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Clock className="h-4 w-4" />
-              <span>{selectedVideo.duration} minutes</span>
-            </div>
-          )}
-        </div>
-      </Card>
-    );
-  }
-
+export function CourseSidebar({ isEnrolled }: CourseSidebarProps) {
   return (
     <div className="space-y-6">
       {isEnrolled && (

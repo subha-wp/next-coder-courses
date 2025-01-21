@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 export function FeaturedCourses() {
@@ -8,8 +7,8 @@ export function FeaturedCourses() {
 
   const courses = [
     {
-      title: "Strategic Management",
-      category: "Leadership",
+      title: "Digital Marketing",
+      category: "Marketing",
       duration: "8 weeks",
     },
     {
@@ -24,12 +23,12 @@ export function FeaturedCourses() {
     },
     { title: "AI in Business", category: "Innovation", duration: "8 weeks" },
     {
-      title: "Global Business Strategy",
-      category: "Management",
+      title: "Full-Stack Development",
+      category: "Technology",
       duration: "12 weeks",
     },
     {
-      title: "Digital Marketing Mastery",
+      title: "React Native Mastery",
       category: "Marketing",
       duration: "8 weeks",
     },
@@ -60,12 +59,6 @@ export function FeaturedCourses() {
                 <p className="text-white/80 mb-4">
                   Duration: {course.duration}
                 </p>
-                <Button
-                  variant="secondary"
-                  className="w-full md:w-auto bg-white/10 text-white hover:bg-white/20 shadow-[0_0_10px_rgba(255,255,255,0.2)] hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-all duration-300"
-                >
-                  Join Now
-                </Button>
               </div>
             </div>
           ))}

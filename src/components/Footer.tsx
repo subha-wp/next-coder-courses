@@ -76,16 +76,16 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="#"
+                  href="https://www.youtube.com/@nextcoder8790"
                   className="text-sm text-gray-600 hover:text-blue-600"
                 >
-                  Twitter
+                  Youtube
                 </a>
               </li>
 
               <li>
                 <a
-                  href="#"
+                  href="https://www.facebook.com/nextCoderbynextcode"
                   className="text-sm text-gray-600 hover:text-blue-600"
                 >
                   Facebook
