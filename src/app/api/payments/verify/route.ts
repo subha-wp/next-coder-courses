@@ -41,7 +41,7 @@ export async function POST(request: Request) {
         data: {
           userId: user.id,
           courseId,
-          amount: 0, // Will be updated with actual amount
+          amount: 0,
           status: "COMPLETED",
         },
       }),
