@@ -28,10 +28,6 @@ export default function CoursePageContent({
     setSelectedVideo(video);
   }, []);
 
-  const handleCloseVideo = useCallback(() => {
-    setSelectedVideo(null);
-  }, []);
-
   const handleEnroll = async () => {
     try {
       const response = await fetch("/api/courses/enroll", {
@@ -78,12 +74,7 @@ export default function CoursePageContent({
               onVideoSelect={handleVideoSelect}
             />
           </div>
-          <CourseSidebar
-            isEnrolled={isEnrolled}
-            course={course}
-            selectedVideo={selectedVideo}
-            onClose={handleCloseVideo}
-          />
+          <CourseSidebar isEnrolled={isEnrolled} course={course} />
         </div>
       </div>
     </>
