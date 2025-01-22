@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,10 +10,10 @@ datasource db {
 model User {
   id             String           @id @default(cuid())
   name           String
-  email          String?           @unique
-  phoneNumber    String?           @unique
+  email          String?          @unique
+  phoneNumber    String?          @unique
   hashedPassword String
-  googleId       String?   @unique
+  googleId       String?          @unique
   role           Role             @default(STUDENT)
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
@@ -26,6 +23,20 @@ model User {
   streamSessions StreamSession[]
   sessions       Session[]
   streamParticipants StreamParticipant[]
+  pushTokens     PushToken[]      // New relation for push tokens
+}
+
+model PushToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lastUsed  DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@map("push_tokens")
 }
 
 model Session {
@@ -131,11 +142,11 @@ model StreamSession {
   title        String
   description  String?
   thumbnailUrl String?
-  price       Float
-  isFree      Boolean      @default(false)
+  price        Float
+  isFree       Boolean      @default(false)
   startTime    DateTime
   endTime      DateTime?
-  status       StreamStatus @default(SCHEDULED) // ENUM: SCHEDULED, LIVE, ENDED
+  status       StreamStatus @default(SCHEDULED)
   recordingUrl String?  // Link to recorded session (optional)
   
   instructor   User     @relation(fields: [instructorId], references: [id], onDelete: Cascade)
@@ -152,7 +163,7 @@ model StreamParticipant {
   session     StreamSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([sessionId, userId]) // Ensures no duplicate participants
+  @@unique([sessionId, userId])
 }
 
 enum StreamStatus {

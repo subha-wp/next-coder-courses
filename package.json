@@ -26,6 +26,7 @@
     "arctic": "^3.1.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "expo-server-sdk": "^3.13.0",
     "hls.js": "^1.5.19",
     "lucia": "^3.2.2",
     "lucide-react": "^0.471.1",
