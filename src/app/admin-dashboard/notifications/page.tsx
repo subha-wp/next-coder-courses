@@ -10,14 +10,18 @@ import { sendNotification } from "@/lib/notifications";
 
 export default function NotificationsPage() {
   const [title, setTitle] = useState("");
+  const [subtitle, setSubtitle] = useState("");
   const [message, setMessage] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [userIds, setUserIds] = useState("");
+  const [data, setData] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!title.trim() || !message.trim()) {
-      toast.error("Please fill in all fields");
+      toast.error("Please fill in all required fields");
       return;
     }
 
@@ -26,12 +30,23 @@ export default function NotificationsPage() {
     try {
       await sendNotification({
         title,
+        subtitle,
         message,
+        imageUrl: imageUrl.trim() || undefined,
+        userIds: userIds
+          .split(",")
+          .map((id) => id.trim())
+          .filter(Boolean),
+        data: data ? JSON.parse(data) : undefined,
       });
 
       toast.success("Notification sent successfully!");
       setTitle("");
+      setSubtitle("");
       setMessage("");
+      setImageUrl("");
+      setUserIds("");
+      setData("");
     } catch (error) {
       console.error("Error:", error);
       toast.error("Failed to send notification");
@@ -50,7 +65,7 @@ export default function NotificationsPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <label className="text-sm font-medium" htmlFor="title">
-                Notification Title
+                Notification Title *
               </label>
               <Input
                 id="title"
@@ -62,8 +77,20 @@ export default function NotificationsPage() {
             </div>
 
             <div className="space-y-2">
+              <label className="text-sm font-medium" htmlFor="subtitle">
+                Subtitle (iOS only)
+              </label>
+              <Input
+                id="subtitle"
+                value={subtitle}
+                onChange={(e) => setSubtitle(e.target.value)}
+                placeholder="Enter subtitle (optional)"
+              />
+            </div>
+
+            <div className="space-y-2">
               <label className="text-sm font-medium" htmlFor="message">
-                Notification Message
+                Notification Message *
               </label>
               <Textarea
                 id="message"
@@ -72,6 +99,43 @@ export default function NotificationsPage() {
                 placeholder="Enter notification message"
                 rows={4}
                 required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium" htmlFor="imageUrl">
+                Image URL
+              </label>
+              <Input
+                id="imageUrl"
+                value={imageUrl}
+                onChange={(e) => setImageUrl(e.target.value)}
+                placeholder="Enter image URL (optional)"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium" htmlFor="userIds">
+                User IDs
+              </label>
+              <Input
+                id="userIds"
+                value={userIds}
+                onChange={(e) => setUserIds(e.target.value)}
+                placeholder="Enter user IDs, comma-separated (optional)"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium" htmlFor="data">
+                Additional Data (JSON)
+              </label>
+              <Textarea
+                id="data"
+                value={data}
+                onChange={(e) => setData(e.target.value)}
+                placeholder="Enter additional data as JSON (optional)"
+                rows={4}
               />
             </div>
 

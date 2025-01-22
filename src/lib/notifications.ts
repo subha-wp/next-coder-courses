@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export async function sendNotification({
   title,
   message,
@@ -5,7 +6,10 @@ export async function sendNotification({
 }: {
   title: string;
   message: string;
+  subtitle: string;
   userIds?: string[];
+  imageUrl: string | undefined;
+  data: any;
 }) {
   try {
     const response = await fetch("/api/send-notification", {
