@@ -50,11 +50,11 @@ export async function POST(request: Request) {
       notification: {
         title: notification.title,
         body: notification.body,
+        imageUrl: notification.imageUrl,
       },
       data: {
         ...data,
         click_action: "FLUTTER_NOTIFICATION_CLICK",
-        imageUrl: notification.imageUrl || "",
       },
       android: {
         priority: "high",
@@ -80,7 +80,22 @@ export async function POST(request: Request) {
     };
 
     // Send the message
-    const response = await adminMessaging.sendMulticast(message);
+    const response = await adminMessaging.sendEachForMulticast(message);
+
+    // Clean up invalid tokens
+    const invalidTokens = response.responses
+      .map((res, idx) => (res.success ? null : tokens[idx].token))
+      .filter(Boolean);
+
+    if (invalidTokens.length > 0) {
+      await prisma.pushToken.deleteMany({
+        where: {
+          token: {
+            in: invalidTokens as string[],
+          },
+        },
+      });
+    }
 
     return NextResponse.json({
       success: true,

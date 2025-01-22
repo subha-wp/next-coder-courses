@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-//@ts-nocheck
 "use client";
 
 import { useState } from "react";
@@ -39,7 +37,6 @@ export default function NotificationsPage() {
             imageUrl: imageUrl.trim() || undefined,
           },
           data: {
-            // Add any additional data you want to send
             type: "general",
             timestamp: new Date().toISOString(),
           },
@@ -50,20 +47,28 @@ export default function NotificationsPage() {
         }),
       });
 
-      const result = await response.json();
-
       if (!response.ok) {
-        throw new Error(result.error || "Failed to send notification");
+        throw new Error("Failed to send notification");
       }
 
-      toast.success("Notification sent successfully!");
-      setTitle("");
-      setMessage("");
-      setImageUrl("");
-      setUserIds("");
+      const result = await response.json();
+
+      if (result.success) {
+        toast.success(
+          `Notification sent successfully! (Success: ${result.results.success}, Failed: ${result.results.failure})`
+        );
+        setTitle("");
+        setMessage("");
+        setImageUrl("");
+        setUserIds("");
+      } else {
+        throw new Error(result.error || "Failed to send notification");
+      }
     } catch (error) {
       console.error("Error:", error);
-      toast.error(error.message || "Failed to send notification");
+      toast.error(
+        error instanceof Error ? error.message : "Failed to send notification"
+      );
     } finally {
       setLoading(false);
     }
