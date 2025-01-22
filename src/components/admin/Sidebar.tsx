@@ -12,6 +12,7 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
+  Bell,
 } from "lucide-react";
 import { logout } from "@/app/auth/actions";
 import { useState } from "react";
@@ -22,6 +23,7 @@ const navigation = [
   { name: "Users", href: "/admin-dashboard/users", icon: Users },
   { name: "Courses", href: "/admin-dashboard/courses", icon: BookOpen },
   { name: "Live Sessions", href: "/admin-dashboard/sessions", icon: Calendar },
+  { name: "Notifications", href: "/admin-dashboard/notifications", icon: Bell },
   { name: "Settings", href: "/admin-dashboard/settings", icon: Settings },
 ];
 

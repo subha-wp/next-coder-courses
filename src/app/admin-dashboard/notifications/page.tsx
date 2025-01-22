@@ -1,7 +1,12 @@
 "use client";
 
-import { sendNotification } from "@/lib/notifications";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { toast } from "sonner";
+import { sendNotification } from "@/lib/notifications";
 
 export default function NotificationsPage() {
   const [title, setTitle] = useState("");
@@ -10,6 +15,12 @@ export default function NotificationsPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!title.trim() || !message.trim()) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -18,49 +29,58 @@ export default function NotificationsPage() {
         message,
       });
 
+      toast.success("Notification sent successfully!");
       setTitle("");
       setMessage("");
-      alert("Notification sent successfully!");
     } catch (error) {
       console.error("Error:", error);
-      alert("Failed to send notification");
+      toast.error("Failed to send notification");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Send Push Notification</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block mb-2">Title</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
-        <div>
-          <label className="block mb-2">Message</label>
-          <textarea
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            className="w-full p-2 border rounded"
-            rows={4}
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={loading}
-          className="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
-        >
-          {loading ? "Sending..." : "Send Notification"}
-        </button>
-      </form>
+    <div className="container mx-auto py-8">
+      <Card>
+        <CardHeader>
+          <CardTitle>Send Push Notification</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <label className="text-sm font-medium" htmlFor="title">
+                Notification Title
+              </label>
+              <Input
+                id="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Enter notification title"
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium" htmlFor="message">
+                Notification Message
+              </label>
+              <Textarea
+                id="message"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Enter notification message"
+                rows={4}
+                required
+              />
+            </div>
+
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? "Sending..." : "Send Notification"}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 }
