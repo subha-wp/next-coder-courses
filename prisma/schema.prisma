@@ -23,19 +23,16 @@ model User {
   streamSessions StreamSession[]
   sessions       Session[]
   streamParticipants StreamParticipant[]
-  pushTokens     PushToken[]      // New relation for push tokens
+
 }
 
 model PushToken {
   id        String   @id @default(cuid())
   token     String   @unique
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   lastUsed  DateTime @default(now())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([userId])
   @@map("push_tokens")
 }
 
