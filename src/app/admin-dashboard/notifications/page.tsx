@@ -6,15 +6,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { sendNotification } from "@/lib/notifications";
 
 export default function NotificationsPage() {
   const [title, setTitle] = useState("");
-  const [subtitle, setSubtitle] = useState("");
   const [message, setMessage] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [userIds, setUserIds] = useState("");
-  const [data, setData] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -28,25 +25,38 @@ export default function NotificationsPage() {
     setLoading(true);
 
     try {
-      await sendNotification({
-        title,
-        subtitle,
-        message,
-        imageUrl: imageUrl.trim() || undefined,
-        userIds: userIds
-          .split(",")
-          .map((id) => id.trim())
-          .filter(Boolean),
-        data: data ? JSON.parse(data) : undefined,
+      const response = await fetch("/api/send-notification", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          notification: {
+            title,
+            body: message,
+            imageUrl: imageUrl.trim() || undefined,
+          },
+          data: {
+            // Add any additional data you want to send
+            type: "general",
+            timestamp: new Date().toISOString(),
+          },
+          userIds: userIds
+            .split(",")
+            .map((id) => id.trim())
+            .filter(Boolean),
+        }),
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to send notification");
+      }
 
       toast.success("Notification sent successfully!");
       setTitle("");
-      setSubtitle("");
       setMessage("");
       setImageUrl("");
       setUserIds("");
-      setData("");
     } catch (error) {
       console.error("Error:", error);
       toast.error("Failed to send notification");
@@ -77,18 +87,6 @@ export default function NotificationsPage() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium" htmlFor="subtitle">
-                Subtitle (iOS only)
-              </label>
-              <Input
-                id="subtitle"
-                value={subtitle}
-                onChange={(e) => setSubtitle(e.target.value)}
-                placeholder="Enter subtitle (optional)"
-              />
-            </div>
-
-            <div className="space-y-2">
               <label className="text-sm font-medium" htmlFor="message">
                 Notification Message *
               </label>
@@ -104,39 +102,30 @@ export default function NotificationsPage() {
 
             <div className="space-y-2">
               <label className="text-sm font-medium" htmlFor="imageUrl">
-                Image URL
+                Image URL (optional)
               </label>
               <Input
                 id="imageUrl"
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
-                placeholder="Enter image URL (optional)"
+                placeholder="Enter image URL"
+                type="url"
               />
             </div>
 
             <div className="space-y-2">
               <label className="text-sm font-medium" htmlFor="userIds">
-                User IDs
+                User IDs (optional, comma-separated)
               </label>
               <Input
                 id="userIds"
                 value={userIds}
                 onChange={(e) => setUserIds(e.target.value)}
-                placeholder="Enter user IDs, comma-separated (optional)"
+                placeholder="Enter user IDs, comma-separated"
               />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium" htmlFor="data">
-                Additional Data (JSON)
-              </label>
-              <Textarea
-                id="data"
-                value={data}
-                onChange={(e) => setData(e.target.value)}
-                placeholder="Enter additional data as JSON (optional)"
-                rows={4}
-              />
+              <p className="text-sm text-muted-foreground">
+                Leave empty to send to all users
+              </p>
             </div>
 
             <Button type="submit" className="w-full" disabled={loading}>
