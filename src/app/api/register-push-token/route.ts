@@ -5,14 +5,18 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    const { token } = await request.json();
+    const body = await request.json();
+
+    const { token } = body;
 
     if (!token) {
+      console.log("Token is missing");
       return NextResponse.json({ error: "Token is required" }, { status: 400 });
     }
 
-    // Store the token in your database
-    await prisma.pushToken.upsert({
+    console.log("Attempting to upsert token:", token);
+
+    const result = await prisma.pushToken.upsert({
       where: { token },
       update: { lastUsed: new Date() },
       create: {
@@ -21,11 +25,13 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json({ success: true }, { status: 200 });
+    console.log("Upsert result:", result);
+
+    return NextResponse.json({ success: true, data: result }, { status: 200 });
   } catch (error) {
     console.error("Error registering push token:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Internal server error", details: error.message },
       { status: 500 }
     );
   }
