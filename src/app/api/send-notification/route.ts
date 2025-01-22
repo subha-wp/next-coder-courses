@@ -6,11 +6,11 @@ import prisma from "@/lib/prisma";
 
 export async function POST(request: Request) {
   try {
-    const { title, body, imageUrl, userIds } = await request.json();
+    const { notification, data, userIds } = await request.json();
 
-    if (!title || !body) {
+    if (!notification.title || !notification.body) {
       return NextResponse.json(
-        { error: "Title and body are required" },
+        { error: "Notification title and body are required" },
         { status: 400 }
       );
     }
@@ -48,17 +48,18 @@ export async function POST(request: Request) {
     // Prepare notification message
     const message = {
       notification: {
-        title,
-        body,
+        title: notification.title,
+        body: notification.body,
       },
       data: {
+        ...data,
         click_action: "FLUTTER_NOTIFICATION_CLICK",
-        imageUrl: imageUrl || "",
+        imageUrl: notification.imageUrl || "",
       },
       android: {
         priority: "high",
         notification: {
-          imageUrl,
+          imageUrl: notification.imageUrl,
           priority: "max",
           defaultSound: true,
           defaultVibrateTimings: true,
@@ -72,7 +73,7 @@ export async function POST(request: Request) {
           },
         },
         fcm_options: {
-          image: imageUrl,
+          image: notification.imageUrl,
         },
       },
       tokens: tokens.map((t) => t.token),
