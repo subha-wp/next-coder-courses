@@ -50,7 +50,7 @@ export function CourseContent({
                 </div>
                 {isLessonAccessible ? (
                   <Button variant="outline" size="sm" asChild>
-                    <Link href={`/courses/${course.id}/lessons/${lesson.id}`}>
+                    <Link href={`#`}>
                       {isEnrolled ? "Continue" : "Preview"}
                     </Link>
                   </Button>
