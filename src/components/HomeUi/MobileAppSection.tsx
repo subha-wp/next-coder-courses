@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { AppleIcon, PlayIcon } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import Link from "next/link";
 
 export function MobileAppSection() {
   const sectionRef = useScrollAnimation();
@@ -44,10 +45,9 @@ export function MobileAppSection() {
                 </div>
                 <div className="absolute inset-0 bg-primary/10 translate-y-full transition-transform group-hover:translate-y-0" />
               </Button> */}
-              <Button
-                variant="default"
-                size="lg"
-                className="relative overflow-hidden group w-full sm:w-auto"
+              <Link
+                href="https://play.google.com/store/apps/details?id=com.devcodersubha.nextcodercourses"
+                className="relative overflow-hidden group w-full sm:w-auto py-1 px-6 bg-white text-primary-foreground flex items-center space-x-2 rounded-md font-semibold"
               >
                 <PlayIcon className="w-6 h-6" />
                 <div>
@@ -57,7 +57,7 @@ export function MobileAppSection() {
                   </span>
                 </div>
                 <div className="absolute inset-0 bg-primary/10 translate-y-full transition-transform group-hover:translate-y-0" />
-              </Button>
+              </Link>
             </div>
           </div>
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import Link from "next/link";
 
 export function CTASection() {
   const animationRef = useScrollAnimation();
@@ -21,12 +21,12 @@ export function CTASection() {
           LearnHub&apos;s enterprise solutions.
         </p>
         <div className="flex justify-center">
-          <Button
-            size="lg"
-            className="w-full sm:w-auto bg-white text-black hover:bg-white/90 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] transition-all duration-300 font-bold text-lg"
+          <Link
+            href="https://play.google.com/store/apps/details?id=com.devcodersubha.nextcodercourses"
+            className="w-full px-6 py-2 rounded-md sm:w-auto bg-white text-black hover:bg-white/90 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] transition-all duration-300 font-bold text-lg"
           >
             Join Now
-          </Button>
+          </Link>
         </div>
       </div>
     </section>

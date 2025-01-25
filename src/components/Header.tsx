@@ -2,12 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+
 import { ThemeToggle } from "./theme-toggle";
-import { Menu, X } from "lucide-react";
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -54,23 +52,16 @@ export default function Header() {
             </Link>
             <div className="flex items-center space-x-4">
               <ThemeToggle />
-              <Button className="hidden md:inline-flex">Download Now</Button>
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="md:hidden"
-                aria-label="Toggle menu"
+
+              <Link
+                className="rounded-sm bg-white py-2 px-4 text-primary-foreground font-semibold"
+                href="https://play.google.com/store/apps/details?id=com.devcodersubha.nextcodercourses"
               >
-                {isMenuOpen ? <X /> : <Menu />}
-              </button>
+                Download Now
+              </Link>
             </div>
           </div>
-          <div
-            className={`md:flex md:items-center md:space-x-6 ${
-              isMenuOpen ? "block" : "hidden"
-            } mt-4 md:mt-0`}
-          >
-            <Button className="mt-4 md:hidden w-full">Download Now</Button>
-          </div>
+
           <div
             className="absolute bottom-0 left-0 mx-6 h-0.5 bg-primary transition-all duration-300 ease-out rounded-2xl"
             style={{ width: `${scrollProgress}%` }}
