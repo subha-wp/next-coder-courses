@@ -4,7 +4,7 @@ import React from "react";
 
 export default function AnimatedBrand() {
   return (
-    <div className="flex items-center justify-center  bg-black overflow-hidden">
+    <div className="flex items-center justify-center pt-10 bg-black overflow-hidden">
       <h1
         className="text-6xl md:text-8xl font-bold relative animate-gradient"
         aria-label="nextCoder"

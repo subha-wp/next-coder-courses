@@ -7,7 +7,7 @@ export function HeroSection() {
   const animationRef = useScrollAnimation();
 
   return (
-    <section className="bg-black text-white py-16  relative overflow-hidden">
+    <section className="bg-black text-white py-24  relative overflow-hidden">
       {/* Neon light effect background */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-32 md:w-64 h-32 md:h-64 bg-violet-500/30 rounded-full blur-3xl animate-pulse" />
