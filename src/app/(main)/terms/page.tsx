@@ -1,86 +1,104 @@
 /* eslint-disable react/no-unescaped-entities */
 import Link from "next/link";
 
-export default function TermsPage() {
+export default function TermsAndConditionsPage() {
   return (
     <div className="container mx-auto px-4 py-12">
       <h1 className="text-4xl font-bold mb-8">Terms and Conditions</h1>
       <div className="prose max-w-none">
         <p className="mb-6">Last updated: January 1, 2024</p>
 
-        <h2 className="text-2xl font-semibold mt-8 mb-4">1. Introduction</h2>
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          1. Acceptance of Terms
+        </h2>
         <p className="mb-4">
-          Welcome to nextCoder. These Terms and Conditions govern your use of
-          our website and services. By accessing or using nextCoder, you agree
-          to be bound by these terms.
+          By accessing and using nextCoder's services, including our courses and
+          EMI payment options, you agree to be bound by these Terms and
+          Conditions.
         </p>
 
-        <h2 className="text-2xl font-semibold mt-8 mb-4">2. Definitions</h2>
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          2. Course Access and Use
+        </h2>
+        <p className="mb-4">
+          Upon successful payment or enrollment in an EMI plan, you will be
+          granted access to the purchased course(s). This access is for
+          personal, non-commercial use only.
+        </p>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          3. EMI Payment Terms
+        </h2>
+        <p className="mb-4">
+          If you choose to pay via EMI (Equated Monthly Installments):
+        </p>
         <ul className="list-disc pl-6 mb-6">
-          <li>"Platform" refers to nextCoder website and services</li>
           <li>
-            "User" refers to any individual accessing or using the Platform
+            You agree to pay the full course fee in installments as per the
+            selected EMI plan.
           </li>
           <li>
-            "Content" refers to courses, materials, and resources available on
-            the Platform
+            Failure to pay any installment may result in suspension of course
+            access.
           </li>
-        </ul>
-
-        <h2 className="text-2xl font-semibold mt-8 mb-4">
-          3. Account Registration
-        </h2>
-        <p className="mb-4">
-          Users must provide accurate and complete information when creating an
-          account. You are responsible for maintaining the confidentiality of
-          your account credentials.
-        </p>
-
-        <h2 className="text-2xl font-semibold mt-8 mb-4">
-          4. Course Access and Usage
-        </h2>
-        <ul className="list-disc pl-6 mb-6">
-          <li>Course access is limited to registered and paid users</li>
-          <li>Course materials may not be shared, copied, or distributed</li>
-          <li>Access duration varies by course and package selected</li>
-        </ul>
-
-        <h2 className="text-2xl font-semibold mt-8 mb-4">5. Payment Terms</h2>
-        <p className="mb-4">
-          All payments are processed securely. Course fees are non-refundable
-          except as specified in our Refund Policy. Prices are subject to change
-          without notice.
-        </p>
-
-        <h2 className="text-2xl font-semibold mt-8 mb-4">
-          6. Intellectual Property
-        </h2>
-        <p className="mb-4">
-          All content on the Platform is protected by copyright and other
-          intellectual property rights owned by nextCoder or its licensors.
-        </p>
-
-        <h2 className="text-2xl font-semibold mt-8 mb-4">7. User Conduct</h2>
-        <p className="mb-4">Users agree to:</p>
-        <ul className="list-disc pl-6 mb-6">
-          <li>Not share account credentials</li>
-          <li>Not engage in unauthorized copying or distribution of content</li>
           <li>
-            Maintain respectful communication in all platform interactions
+            EMI plans are facilitated through our payment partner, Razorpay.
           </li>
         </ul>
 
-        <h2 className="text-2xl font-semibold mt-8 mb-4">8. Termination</h2>
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          4. Intellectual Property
+        </h2>
         <p className="mb-4">
-          nextCoder reserves the right to terminate or suspend accounts for
-          violations of these terms.
+          All course content, including videos, texts, and assignments, is the
+          property of nextCoder and protected by copyright laws. Reproduction or
+          distribution without permission is prohibited.
+        </p>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">5. User Conduct</h2>
+        <p className="mb-4">
+          You agree to use our platform responsibly and not engage in any
+          activity that may disrupt the learning experience of others or
+          compromise the security of our systems.
         </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">
-          9. Contact Information
+          6. Refunds and Cancellations
         </h2>
         <p className="mb-4">
-          For questions about these Terms and Conditions, please contact us at{" "}
+          Our refund and cancellation policies are detailed in our separate
+          Refund Policy. Please refer to it for specific terms and conditions
+          regarding course cancellations and refunds.
+        </p>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          7. Limitation of Liability
+        </h2>
+        <p className="mb-4">
+          nextCoder is not liable for any indirect, incidental, or consequential
+          damages arising from your use of our services or any content provided
+          in our courses.
+        </p>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          8. Changes to Terms
+        </h2>
+        <p className="mb-4">
+          We reserve the right to modify these terms at any time. Continued use
+          of our services after changes constitutes acceptance of the new terms.
+        </p>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">9. Governing Law</h2>
+        <p className="mb-4">
+          These terms are governed by the laws of [Your Country/State], without
+          regard to its conflict of law principles.
+        </p>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          10. Contact Information
+        </h2>
+        <p className="mb-4">
+          For any questions regarding these terms, please contact us at{" "}
           <a
             href="mailto:info.nextcoder@gmail.com"
             className="text-primary hover:underline"
