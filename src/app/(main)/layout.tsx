@@ -40,9 +40,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div
-      className={`${inter.className} min-h-screen bg-background text-foreground`}
-    >
+    <div className={`${inter.className}`}>
       <>
         <Header />
         <main>{children}</main>

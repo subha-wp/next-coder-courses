@@ -1,4 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import AnimatedSectionHeader from "../AnimatedSectionHeader";
 
 interface Feedback {
   id: number;
@@ -113,6 +114,7 @@ export default function FeedbackMarquee() {
 
   return (
     <div className="w-full overflow-hidden bg-muted/50 py-12">
+      <AnimatedSectionHeader title="Success Stories" />
       <div className="relative flex flex-col gap-12">
         {/* First Marquee */}
         <div className="relative flex gap-4 overflow-hidden">
