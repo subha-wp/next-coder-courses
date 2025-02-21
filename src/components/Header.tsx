@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-import { ThemeToggle } from "./theme-toggle";
-
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -51,8 +49,6 @@ export default function Header() {
               nextCoder
             </Link>
             <div className="flex items-center space-x-4">
-              <ThemeToggle />
-
               <Link
                 className="rounded-sm bg-white py-2 px-4 text-primary-foreground font-semibold"
                 href="https://play.google.com/store/apps/details?id=com.devcodersubha.nextcodercourses"

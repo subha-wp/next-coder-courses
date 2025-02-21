@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
 import { Metadata } from "next";
-import { ThemeProvider } from "@/providers/theme-provider";
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -43,16 +43,11 @@ export default function RootLayout({
     <div
       className={`${inter.className} min-h-screen bg-background text-foreground`}
     >
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="dark"
-        enableSystem
-        disableTransitionOnChange
-      >
+      <>
         <Header />
         <main>{children}</main>
         <Footer />
-      </ThemeProvider>
+      </>
     </div>
   );
 }
