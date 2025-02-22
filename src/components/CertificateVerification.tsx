@@ -22,7 +22,7 @@ export default function CertificateVerification() {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 min-h-screen flex flex-col items-center  shadow-lg rounded-lg">
+    <div className="max-w-md mx-auto p-6 min-h-screen flex flex-col justify-center items-center  shadow-lg rounded-lg">
       <h2 className="text-xl font-semibold  mb-4">Certificate Verification</h2>
       <Input
         type="text"
