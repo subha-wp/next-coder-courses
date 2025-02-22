@@ -27,7 +27,7 @@ export function MobileNav() {
     },
     {
       label: "Verify",
-      href: "/user/verify-certificate",
+      href: "/verify-certificate",
       icon: ShieldCheck,
     },
     {
