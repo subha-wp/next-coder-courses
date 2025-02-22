@@ -20,6 +20,7 @@ import FeedbackMarquee from "@/components/pay-after-placement/feedback-marquee";
 import CertificateCard from "@/components/pay-after-placement/CertificateCard";
 import StickyButton from "@/components/pay-after-placement/StickyButton";
 import Faq from "@/components/pay-after-placement/Faq";
+import ImageMarquee from "@/components/pay-after-placement/ImageMarquee";
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -115,6 +116,7 @@ export default function LandingPage() {
         </div>
       </motion.section>
       <CertificateCard />
+      <ImageMarquee />
       {/* Features */}
       <motion.section
         className="container mx-auto px-4 py-20"

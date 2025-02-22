@@ -40,7 +40,11 @@ export default function Hero() {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
               guaranteed placement.{" "}
             </span>
-            Join our intensive program and pay only when you succeed.
+            Join our intensive program and{" "}
+            <span className="text-transparent font-semibold bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
+              Pay only when you succeed
+            </span>
+            .
           </motion.p>
 
           <motion.div
