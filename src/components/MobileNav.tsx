@@ -1,7 +1,13 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, User, GraduationCap, LogOut } from "lucide-react";
+import {
+  BookOpen,
+  User,
+  GraduationCap,
+  LogOut,
+  ShieldCheck,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { logout } from "@/app/auth/actions";
 
@@ -18,6 +24,11 @@ export function MobileNav() {
       label: "My Courses",
       href: "/user/my-courses",
       icon: GraduationCap,
+    },
+    {
+      label: "Verify",
+      href: "/user/verify-certificate",
+      icon: ShieldCheck,
     },
     {
       label: "Profile",
@@ -48,14 +59,6 @@ export function MobileNav() {
                   isActive ? "animate-bounce" : ""
                 )}
               />
-              <span
-                className={cn(
-                  "text-xs font-medium transition-all duration-300 ease-in-out",
-                  isActive ? "font-bold" : "hover:font-semibold"
-                )}
-              >
-                {item.label}
-              </span>
             </Link>
           );
         })}
@@ -64,9 +67,6 @@ export function MobileNav() {
           className="flex flex-col items-center gap-1 py-2 px-3 rounded-lg transition-all duration-300 ease-in-out text-red-600 hover:text-red-700"
         >
           <LogOut className="w-6 h-6 transition-transform duration-300 ease-in-out hover:scale-110" />
-          <span className="text-xs font-medium transition-all duration-300 ease-in-out hover:font-semibold">
-            Logout
-          </span>
         </button>
       </nav>
     </div>
