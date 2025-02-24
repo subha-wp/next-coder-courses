@@ -44,7 +44,8 @@ export default function JoinNowButton({ amount }) {
         amount: amount * 100, // Amount in paisa
         currency: "INR",
         name: "NextCoder",
-        description: "Join Our 3-Day Intensive Program",
+        image: "/nextcoder-logo-512.png",
+        description: "Join Our 7-Day Intensive Program",
         order_id: data.orderId,
         handler: (response) => {
           // Handle successful payment
