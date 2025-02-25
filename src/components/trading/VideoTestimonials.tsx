@@ -27,6 +27,13 @@ export default function VideoTestimonials() {
       description: "আমি ক্রিপ্টো ট্রেডিংয়ে দক্ষ হয়েছি।",
     },
     {
+      id: 4,
+      name: "MadhuSudan",
+      videoUrl:
+        "https://gist.github.com/user-attachments/assets/950e291b-264d-4fbe-b4cd-83d8800a5bba", // Placeholder URL
+      description: "আমার ট্রেডিং ক্যারিয়ারকে নতুন দিক দিচ্ছে।",
+    },
+    {
       id: 3,
       name: "Barun Das",
       videoUrl:
