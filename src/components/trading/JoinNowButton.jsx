@@ -3,9 +3,11 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Navigation } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function JoinNowButton({ amount }) {
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const loadRazorpayScript = () => {
     return new Promise((resolve) => {
@@ -50,7 +52,7 @@ export default function JoinNowButton({ amount }) {
         handler: (response) => {
           // Handle successful payment
           console.log("Payment Successful:", response);
-          alert("Payment successful! Welcome aboard!");
+          router.push("/trading-course/thank-you");
         },
         theme: {
           color: "#9333ea", // Blue for a professional dark theme

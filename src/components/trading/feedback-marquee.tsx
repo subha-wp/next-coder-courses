@@ -12,33 +12,33 @@ export default function FeedbackMarquee() {
   const feedbackList1: Feedback[] = [
     {
       id: 1,
-      name: "Aarav Sharma",
+      name: "আরব",
       message: "এই প্ল্যাটফর্ম আমার ট্রেডিং ক্যারিয়ারকে নতুন দিক দিচ্ছে।",
       avatar: "/placeholder.svg?height=40&width=40",
     },
     {
       id: 2,
-      name: "Sneha Patel",
+      name: "স্নেহা",
       message:
         "ট্রেডিং শেখার দারুণ সুযোগ! আমি এখান থেকে অনেক নতুন কৌশল শিখেছি।",
       avatar: "/placeholder.svg?height=40&width=40",
     },
     {
       id: 3,
-      name: "Rohan Verma",
+      name: "রোহন বর্মা",
       message: "খুবই উপযোগী সংস্থান এবং গাইডেন্স, ট্রেডারদের জন্য খুব লাভজনক।",
       avatar: "/placeholder.svg?height=40&width=40",
     },
     {
       id: 4,
-      name: "Ananya Iyer",
+      name: "অনন্যা",
       message:
         "এই প্ল্যাটফর্মটি আমার ট্রেডিং প্রস্তুতির জন্য গেম-চেঞ্জার হয়েছে!",
       avatar: "/placeholder.svg?height=40&width=40",
     },
     {
       id: 5,
-      name: "Vikram Singh",
+      name: "বিক্রম সিং",
       message:
         "৩ দিনের প্রোগ্রামটি আমাকে সঠিক ট্রেডিং পথ বেছে নিতে সাহায্য করেছে।",
       avatar: "/placeholder.svg?height=40&width=40",

@@ -4,6 +4,7 @@ import Hero from "@/components/trading/hero";
 import Marquee from "@/components/trading/Marquee";
 import Skills from "@/components/trading/Skills";
 import StickyJoinNow from "@/components/trading/StickyJoinNow";
+import VideoTestimonials from "@/components/trading/VideoTestimonials";
 import WhyChooseUs from "@/components/trading/WhyChooseUs";
 import React from "react";
 
@@ -14,6 +15,7 @@ export default function page() {
       <Skills />
       <Marquee />
       <WhyChooseUs />
+      <VideoTestimonials />
       <FeedbackMarquee />
       <FAQ />
       <StickyJoinNow amount={199} />
